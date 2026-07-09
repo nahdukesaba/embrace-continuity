@@ -382,6 +382,24 @@ const id: Dict = {
   "admin.groupCar": "Mobil",
   "admin.groupBike": "Motor",
   "admin.noneInGroup": "Tidak ada pemesanan pada grup ini.",
+
+  "adminUsers.title": "Kelola Pengguna",
+  "adminUsers.subtitle": "Tinjau pendaftaran dan kelola akses.",
+  "adminUsers.tab.pending": "Menunggu",
+  "adminUsers.tab.approved": "Disetujui",
+  "adminUsers.tab.rejected": "Ditolak",
+  "adminUsers.col.name": "Nama",
+  "adminUsers.col.email": "Email",
+  "adminUsers.col.phone": "Telepon",
+  "adminUsers.col.role": "Peran",
+  "adminUsers.col.createdAt": "Terdaftar",
+  "adminUsers.col.actions": "Aksi",
+  "adminUsers.emptyTitle": "Tidak ada pengguna",
+  "adminUsers.emptyDesc": "Tidak ada pengguna pada kategori ini.",
+  "adminUsers.approved": "Pengguna disetujui",
+  "adminUsers.rejected": "Pengguna ditolak",
+  "adminUsers.approveQ": "Setujui pengguna ini?",
+  "adminUsers.rejectQ": "Tolak pengguna ini?",
 };
 
 export const dictionaries: Record<Language, Dict> = { en, id };
