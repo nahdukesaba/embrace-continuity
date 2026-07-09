@@ -4,6 +4,7 @@ import { bookingSchema, type BookingValues } from "@/schemas/booking";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
 import { useCreateBooking } from "@/hooks/mutations/useBookingMutations";
@@ -36,6 +37,7 @@ export function BookingForm({
       startTime: "09:00",
       endTime: "10:00",
       numberOfDays: 1,
+      purpose: "",
     },
   });
   const startTime = form.watch("startTime");
@@ -76,6 +78,7 @@ export function BookingForm({
         endDate,
         startTime: values.startTime,
         endTime: values.endTime,
+        purpose: values.purpose,
         userId: user.id,
       });
       toast.success("Booking submitted");
@@ -190,6 +193,17 @@ export function BookingForm({
           </p>
         </div>
       )}
+      <div className="space-y-2">
+        <Label>Purpose</Label>
+        <Textarea
+          rows={3}
+          placeholder="Why do you need this resource?"
+          {...form.register("purpose")}
+        />
+        {form.formState.errors.purpose && (
+          <p className="text-xs text-destructive">{form.formState.errors.purpose.message}</p>
+        )}
+      </div>
       <Button type="submit" disabled={create.isPending} className="w-full">
         {create.isPending ? "Submitting..." : "Request booking"}
       </Button>

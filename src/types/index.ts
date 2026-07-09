@@ -71,11 +71,15 @@ export interface Booking {
   resource?: Resource;
   userId: string;
   user?: BookingUserRef;
-  date: string; // YYYY-MM-DD
+  date: string; // YYYY-MM-DD (Asia/Jakarta)
   endDate?: string; // YYYY-MM-DD, inclusive; defaults to `date` (single-day)
-  startTime: string; // HH:mm
+  startTime: string; // HH:mm (Asia/Jakarta)
   endTime: string;
+  /** ISO 8601 (present when sourced from the backend). */
+  startTimeISO?: string;
+  endTimeISO?: string;
   status: BookingStatus;
+  purpose?: string;
   adminNotes?: string;
   createdAt: string;
   updatedAt: string;
@@ -94,6 +98,7 @@ export interface Paginated<T> {
   page: number;
   pageSize: number;
   total: number;
+  totalPages?: number;
 }
 
 export interface ResourceFilters {
@@ -127,6 +132,7 @@ export interface CreateBookingInput {
   endDate?: string;
   startTime: string;
   endTime: string;
+  purpose?: string;
 }
 
 export interface CreateResourceInput {

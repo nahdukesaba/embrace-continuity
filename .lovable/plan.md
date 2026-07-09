@@ -60,6 +60,8 @@ Turn off mocks for auth only (`if (env.useMocks && !endpointLive) …`), keep th
 
 ## Chunk 4 — Resources + Bookings core (large — split if credits run low)
 
+**STATUS: DONE**
+
 Split checkpoint: 4a resources, then 4b bookings.
 
 **4a Resources**
