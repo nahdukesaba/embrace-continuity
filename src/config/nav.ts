@@ -1,4 +1,4 @@
-import { LayoutDashboard, Boxes, CalendarDays, ClipboardList, Shield, Car as CarIcon } from "lucide-react";
+import { LayoutDashboard, Boxes, CalendarDays, ClipboardList, Shield, Car as CarIcon, Users } from "lucide-react";
 import type { Role } from "@/types";
 
 export interface NavItem {
@@ -16,4 +16,5 @@ export const NAV_ITEMS: NavItem[] = [
   { labelKey: "nav.admin", to: "/admin", icon: Shield, roles: ["admin"] },
   { labelKey: "nav.manageResources", to: "/admin/resources", icon: CarIcon, roles: ["admin"] },
   { labelKey: "nav.reviewBookings", to: "/admin/bookings", icon: ClipboardList, roles: ["admin"] },
+  { labelKey: "nav.manageUsers", to: "/admin/users", icon: Users, roles: ["admin"] },
 ];
