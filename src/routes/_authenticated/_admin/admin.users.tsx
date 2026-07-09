@@ -100,7 +100,7 @@ function UsersTable({ status }: { status: UserStatus }) {
                 <TableCell>{u.email}</TableCell>
                 <TableCell>{u.phone ?? "—"}</TableCell>
                 <TableCell><Badge variant="outline">{u.role}</Badge></TableCell>
-                <TableCell>{u.createdAt ? fmtDate(u.createdAt) : "—"}</TableCell></TableCell>
+                <TableCell>{u.createdAt ? fmtDate(u.createdAt) : "—"}</TableCell>
                 <TableCell className="text-right space-x-2">
                   {status !== "approved" && (
                     <Button size="sm" onClick={() => setConfirm({ action: "approve", user: u })}>
