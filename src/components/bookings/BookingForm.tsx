@@ -78,6 +78,7 @@ export function BookingForm({
         endDate,
         startTime: values.startTime,
         endTime: values.endTime,
+        purpose: values.purpose,
         userId: user.id,
       });
       toast.success("Booking submitted");
