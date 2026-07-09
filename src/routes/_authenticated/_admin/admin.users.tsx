@@ -14,7 +14,7 @@ import { useApproveUser, useRejectUser } from "@/hooks/mutations/useUserMutation
 import { useT } from "@/i18n/LanguageProvider";
 import { Users } from "lucide-react";
 import type { AppUser, UserStatus } from "@/types";
-import { formatDate } from "@/lib/format";
+import { fmtDate } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/_admin/admin/users")({
   head: () => ({ meta: [{ title: "Users · SILAP Aset" }] }),
@@ -59,7 +59,7 @@ function UsersTable({ status }: { status: UserStatus }) {
   if (error) return <p className="text-sm text-destructive">{(error as Error).message}</p>;
   const users = data ?? [];
   if (users.length === 0) {
-    return <EmptyState icon={Users} title={t("adminUsers.emptyTitle")} description={t("adminUsers.emptyDesc")} />;
+    return <EmptyState title={t("adminUsers.emptyTitle")} description={t("adminUsers.emptyDesc")} />;
   }
 
   async function run() {
