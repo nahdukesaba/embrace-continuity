@@ -1,31 +1,33 @@
-import { env } from "@/lib/env";
-import { mockDb } from "@/services/mocks/db";
 import { http } from "@/services/http";
 import type { CreateResourceInput, Resource, ResourceFilters } from "@/types";
 
+/**
+ * Backend Data API. The frontend `Resource` union is preserved; if the
+ * backend response uses different keys (e.g. `amenities`/`seats`) update
+ * the normalizers below.
+ */
 export const resourcesApi = {
   async list(filters: ResourceFilters = {}): Promise<Resource[]> {
-    if (env.useMocks) return mockDb.listResources(filters);
-    const { data } = await http.get<Resource[]>("/resources", { params: filters });
-    return data;
+    const params: Record<string, string> = {};
+    if (filters.search) params.search = filters.search;
+    if (filters.type && filters.type !== "all") params.type = filters.type;
+    if (filters.availability && filters.availability !== "all") params.availability = filters.availability;
+    const { data } = await http.get<Resource[] | { data: Resource[] }>("/resources", { params });
+    return Array.isArray(data) ? data : data.data;
   },
   async get(id: string): Promise<Resource> {
-    if (env.useMocks) return mockDb.getResource(id);
-    const { data } = await http.get<Resource>(`/resources/${id}`);
-    return data;
+    const { data } = await http.get<Resource | { data: Resource }>(`/resources/${id}`);
+    return (data as { data?: Resource }).data ?? (data as Resource);
   },
   async create(input: CreateResourceInput): Promise<Resource> {
-    if (env.useMocks) return mockDb.createResource(input);
-    const { data } = await http.post<Resource>("/resources", input);
-    return data;
+    const { data } = await http.post<Resource | { data: Resource }>("/resources", input);
+    return (data as { data?: Resource }).data ?? (data as Resource);
   },
   async update(id: string, input: Partial<CreateResourceInput>): Promise<Resource> {
-    if (env.useMocks) return mockDb.updateResource(id, input);
-    const { data } = await http.put<Resource>(`/resources/${id}`, input);
-    return data;
+    const { data } = await http.put<Resource | { data: Resource }>(`/resources/${id}`, input);
+    return (data as { data?: Resource }).data ?? (data as Resource);
   },
   async remove(id: string): Promise<void> {
-    if (env.useMocks) return mockDb.deleteResource(id);
     await http.delete(`/resources/${id}`);
   },
 };
