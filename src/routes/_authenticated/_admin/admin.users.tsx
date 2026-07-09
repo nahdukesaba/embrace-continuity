@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { useUsers } from "@/hooks/queries/useUsers";
 import { useApproveUser, useRejectUser } from "@/hooks/mutations/useUserMutations";
 import { useT } from "@/i18n/LanguageProvider";
-import { Users } from "lucide-react";
+
 import type { AppUser, UserStatus } from "@/types";
 import { fmtDate } from "@/lib/format";
 
