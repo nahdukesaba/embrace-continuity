@@ -37,6 +37,7 @@ export function BookingForm({
       startTime: "09:00",
       endTime: "10:00",
       numberOfDays: 1,
+      purpose: "",
     },
   });
   const startTime = form.watch("startTime");
