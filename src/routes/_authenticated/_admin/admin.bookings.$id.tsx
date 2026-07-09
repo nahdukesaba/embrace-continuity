@@ -59,6 +59,7 @@ function AdminBookingReview() {
             <p>{booking.user?.fullName}</p>
             <p className="text-muted-foreground">{booking.user?.email}</p>
             <p className="pt-2 text-muted-foreground">{t("bookingDetail.requested")} {fmtDateTime(booking.createdAt)}</p>
+            {booking.purpose && <p><span className="text-muted-foreground">Purpose:</span> {booking.purpose}</p>}
             {booking.adminNotes && <p>{t("bookingDetail.adminNotes")}: {booking.adminNotes}</p>}
           </CardContent>
         </Card>
