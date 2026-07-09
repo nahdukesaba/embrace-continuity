@@ -58,6 +58,7 @@ function BookingDetail() {
       <Card>
         <CardContent className="space-y-2 p-4 text-sm">
           <p><span className="text-muted-foreground">{t("bookingDetail.requested")}:</span> {fmtDateTime(booking.createdAt)}</p>
+          {booking.purpose && <p><span className="text-muted-foreground">Purpose:</span> {booking.purpose}</p>}
           {booking.adminNotes && <p><span className="text-muted-foreground">{t("bookingDetail.adminNotes")}:</span> {booking.adminNotes}</p>}
         </CardContent>
       </Card>
