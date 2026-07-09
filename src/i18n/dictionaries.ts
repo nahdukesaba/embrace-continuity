@@ -21,6 +21,7 @@ const en: Dict = {
   "nav.workspace": "Workspace",
   "nav.manageResources": "Manage Resources",
   "nav.reviewBookings": "Review Bookings",
+  "nav.manageUsers": "Manage Users",
 
   "action.signIn": "Sign in",
   "action.signOut": "Sign out",
@@ -184,6 +185,24 @@ const en: Dict = {
   "admin.groupCar": "Cars",
   "admin.groupBike": "Bikes",
   "admin.noneInGroup": "No bookings in this group.",
+
+  "adminUsers.title": "Manage Users",
+  "adminUsers.subtitle": "Review registrations and manage access.",
+  "adminUsers.tab.pending": "Pending",
+  "adminUsers.tab.approved": "Approved",
+  "adminUsers.tab.rejected": "Rejected",
+  "adminUsers.col.name": "Name",
+  "adminUsers.col.email": "Email",
+  "adminUsers.col.phone": "Phone",
+  "adminUsers.col.role": "Role",
+  "adminUsers.col.createdAt": "Registered",
+  "adminUsers.col.actions": "Actions",
+  "adminUsers.emptyTitle": "No users",
+  "adminUsers.emptyDesc": "There are no users in this bucket.",
+  "adminUsers.approved": "User approved",
+  "adminUsers.rejected": "User rejected",
+  "adminUsers.approveQ": "Approve this user?",
+  "adminUsers.rejectQ": "Reject this user?",
 };
 
 const id: Dict = {
@@ -199,6 +218,7 @@ const id: Dict = {
   "nav.workspace": "Ruang Kerja",
   "nav.manageResources": "Kelola Aset",
   "nav.reviewBookings": "Tinjau Pemesanan",
+  "nav.manageUsers": "Kelola Pengguna",
 
   "action.signIn": "Masuk",
   "action.signOut": "Keluar",
@@ -362,6 +382,24 @@ const id: Dict = {
   "admin.groupCar": "Mobil",
   "admin.groupBike": "Motor",
   "admin.noneInGroup": "Tidak ada pemesanan pada grup ini.",
+
+  "adminUsers.title": "Kelola Pengguna",
+  "adminUsers.subtitle": "Tinjau pendaftaran dan kelola akses.",
+  "adminUsers.tab.pending": "Menunggu",
+  "adminUsers.tab.approved": "Disetujui",
+  "adminUsers.tab.rejected": "Ditolak",
+  "adminUsers.col.name": "Nama",
+  "adminUsers.col.email": "Email",
+  "adminUsers.col.phone": "Telepon",
+  "adminUsers.col.role": "Peran",
+  "adminUsers.col.createdAt": "Terdaftar",
+  "adminUsers.col.actions": "Aksi",
+  "adminUsers.emptyTitle": "Tidak ada pengguna",
+  "adminUsers.emptyDesc": "Tidak ada pengguna pada kategori ini.",
+  "adminUsers.approved": "Pengguna disetujui",
+  "adminUsers.rejected": "Pengguna ditolak",
+  "adminUsers.approveQ": "Setujui pengguna ini?",
+  "adminUsers.rejectQ": "Tolak pengguna ini?",
 };
 
 export const dictionaries: Record<Language, Dict> = { en, id };

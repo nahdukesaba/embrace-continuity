@@ -23,6 +23,7 @@ import { Route as AuthenticatedMyBookingsIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedResourcesIdRouteImport } from './routes/_authenticated/resources.$id'
 import { Route as AuthenticatedMyBookingsIdRouteImport } from './routes/_authenticated/my-bookings.$id'
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
+import { Route as AuthenticatedAdminAdminUsersRouteImport } from './routes/_authenticated/_admin/admin.users'
 import { Route as AuthenticatedAdminAdminResourcesRouteImport } from './routes/_authenticated/_admin/admin.resources'
 import { Route as AuthenticatedAdminAdminBookingsIndexRouteImport } from './routes/_authenticated/_admin/admin.bookings.index'
 import { Route as AuthenticatedAdminAdminBookingsIdRouteImport } from './routes/_authenticated/_admin/admin.bookings.$id'
@@ -100,6 +101,12 @@ const AuthenticatedAdminAdminIndexRoute =
     path: '/admin/',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminAdminUsersRoute =
+  AuthenticatedAdminAdminUsersRouteImport.update({
+    id: '/admin/users',
+    path: '/admin/users',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAdminResourcesRoute =
   AuthenticatedAdminAdminResourcesRouteImport.update({
     id: '/admin/resources',
@@ -132,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/my-bookings/': typeof AuthenticatedMyBookingsIndexRoute
   '/resources/': typeof AuthenticatedResourcesIndexRoute
   '/admin/resources': typeof AuthenticatedAdminAdminResourcesRoute
+  '/admin/users': typeof AuthenticatedAdminAdminUsersRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/admin/bookings/$id': typeof AuthenticatedAdminAdminBookingsIdRoute
   '/admin/bookings/': typeof AuthenticatedAdminAdminBookingsIndexRoute
@@ -149,6 +157,7 @@ export interface FileRoutesByTo {
   '/my-bookings': typeof AuthenticatedMyBookingsIndexRoute
   '/resources': typeof AuthenticatedResourcesIndexRoute
   '/admin/resources': typeof AuthenticatedAdminAdminResourcesRoute
+  '/admin/users': typeof AuthenticatedAdminAdminUsersRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
   '/admin/bookings/$id': typeof AuthenticatedAdminAdminBookingsIdRoute
   '/admin/bookings': typeof AuthenticatedAdminAdminBookingsIndexRoute
@@ -169,6 +178,7 @@ export interface FileRoutesById {
   '/_authenticated/my-bookings/': typeof AuthenticatedMyBookingsIndexRoute
   '/_authenticated/resources/': typeof AuthenticatedResourcesIndexRoute
   '/_authenticated/_admin/admin/resources': typeof AuthenticatedAdminAdminResourcesRoute
+  '/_authenticated/_admin/admin/users': typeof AuthenticatedAdminAdminUsersRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/_authenticated/_admin/admin/bookings/$id': typeof AuthenticatedAdminAdminBookingsIdRoute
   '/_authenticated/_admin/admin/bookings/': typeof AuthenticatedAdminAdminBookingsIndexRoute
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/my-bookings/'
     | '/resources/'
     | '/admin/resources'
+    | '/admin/users'
     | '/admin/'
     | '/admin/bookings/$id'
     | '/admin/bookings/'
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/my-bookings'
     | '/resources'
     | '/admin/resources'
+    | '/admin/users'
     | '/admin'
     | '/admin/bookings/$id'
     | '/admin/bookings'
@@ -224,6 +236,7 @@ export interface FileRouteTypes {
     | '/_authenticated/my-bookings/'
     | '/_authenticated/resources/'
     | '/_authenticated/_admin/admin/resources'
+    | '/_authenticated/_admin/admin/users'
     | '/_authenticated/_admin/admin/'
     | '/_authenticated/_admin/admin/bookings/$id'
     | '/_authenticated/_admin/admin/bookings/'
@@ -339,6 +352,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/_admin/admin/users': {
+      id: '/_authenticated/_admin/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/_admin/admin/resources': {
       id: '/_authenticated/_admin/admin/resources'
       path: '/admin/resources'
@@ -365,6 +385,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminAdminResourcesRoute: typeof AuthenticatedAdminAdminResourcesRoute
+  AuthenticatedAdminAdminUsersRoute: typeof AuthenticatedAdminAdminUsersRoute
   AuthenticatedAdminAdminIndexRoute: typeof AuthenticatedAdminAdminIndexRoute
   AuthenticatedAdminAdminBookingsIdRoute: typeof AuthenticatedAdminAdminBookingsIdRoute
   AuthenticatedAdminAdminBookingsIndexRoute: typeof AuthenticatedAdminAdminBookingsIndexRoute
@@ -374,6 +395,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
   {
     AuthenticatedAdminAdminResourcesRoute:
       AuthenticatedAdminAdminResourcesRoute,
+    AuthenticatedAdminAdminUsersRoute: AuthenticatedAdminAdminUsersRoute,
     AuthenticatedAdminAdminIndexRoute: AuthenticatedAdminAdminIndexRoute,
     AuthenticatedAdminAdminBookingsIdRoute:
       AuthenticatedAdminAdminBookingsIdRoute,
