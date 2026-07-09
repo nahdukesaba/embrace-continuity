@@ -193,6 +193,17 @@ export function BookingForm({
           </p>
         </div>
       )}
+      <div className="space-y-2">
+        <Label>Purpose</Label>
+        <Textarea
+          rows={3}
+          placeholder="Why do you need this resource?"
+          {...form.register("purpose")}
+        />
+        {form.formState.errors.purpose && (
+          <p className="text-xs text-destructive">{form.formState.errors.purpose.message}</p>
+        )}
+      </div>
       <Button type="submit" disabled={create.isPending} className="w-full">
         {create.isPending ? "Submitting..." : "Request booking"}
       </Button>
