@@ -132,6 +132,7 @@ export interface CreateBookingInput {
   endDate?: string;
   startTime: string;
   endTime: string;
+  purpose?: string;
 }
 
 export interface CreateResourceInput {
