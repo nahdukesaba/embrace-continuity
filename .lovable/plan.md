@@ -81,6 +81,8 @@ Public calendar continues on mocks until chunk 6.
 
 ## Chunk 5 — Booking actions + proofs + timeline (medium–large)
 
+**STATUS: DONE**
+
 1. `bookings.api.ts` → `approve` (returns `{booking, autoRejectedIds}`), `reject({note})`, `revoke({adminNotes, reason})`, `start`, `finish`, `notify({note})`, `history()`.
 2. `useBookingMutations.ts` — surface `autoRejectedIds` in `useApproveBooking` toast; on notify show `emailSent` / `whatsAppSent` split status (with error hint when phone missing).
 3. Proofs — new flow:
