@@ -28,11 +28,9 @@ function AdminBookingReview() {
   const approve = useApproveBooking();
   const reject = useRejectBooking();
   const close = useCloseBooking();
-  const notify = useNotifyBooking();
   const revoke = useRevokeBooking();
   const t = useT();
   const [notes, setNotes] = useState("");
-  const canNotify = booking?.status === "approved" || booking?.status === "in_use" || booking?.status === "finished";
 
   if (isLoading || !booking) return <LoadingSkeleton rows={4} />;
 
