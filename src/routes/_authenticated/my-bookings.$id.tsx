@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProofUploader } from "@/components/bookings/ProofUploader";
 import { ProofGallery } from "@/components/bookings/ProofGallery";
+import { BookingTimeline } from "@/components/bookings/BookingTimeline";
 import { fmtDateTime, fmtBookingRange, daysBetweenInclusive, isTodayInRange } from "@/lib/format";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
@@ -116,6 +117,11 @@ function BookingDetail() {
           </div>
         )}
         <ProofGallery proofs={proofs ?? []} />
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold">{t("bookingDetail.timeline")}</h2>
+        <BookingTimeline bookingId={booking.id} />
       </section>
     </div>
   );

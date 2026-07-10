@@ -85,6 +85,7 @@ const en: Dict = {
   "bookingDetail.requested": "Requested",
   "bookingDetail.adminNotes": "Admin notes",
   "bookingDetail.proofPhotos": "Proof photos",
+  "bookingDetail.timeline": "Timeline",
   "bookingDetail.pendingHint": "Photos can be uploaded once your booking is approved.",
   "bookingDetail.windowHint": "Photo upload becomes available on your booked day.",
   "bookingDetail.startTitleWindow": "You can only start on the booked day",
@@ -134,6 +135,7 @@ const en: Dict = {
   "adminBookingDetail.closed": "Closed",
   "adminBookingDetail.revoked": "Booking revoked",
   "adminBookingDetail.autoRejected": "other request(s) auto-rejected",
+  "adminBookingDetail.autoNotifyHint": "Requester is notified automatically on approve, reject, and revoke.",
   "action.revoke": "Revoke",
 
   "theme.toggle": "Toggle theme",
@@ -282,6 +284,7 @@ const id: Dict = {
   "bookingDetail.requested": "Diminta",
   "bookingDetail.adminNotes": "Catatan admin",
   "bookingDetail.proofPhotos": "Foto bukti",
+  "bookingDetail.timeline": "Riwayat",
   "bookingDetail.pendingHint": "Foto dapat diunggah setelah pemesanan disetujui.",
   "bookingDetail.windowHint": "Unggah foto tersedia pada hari pemesanan Anda.",
   "bookingDetail.startTitleWindow": "Hanya bisa memulai pada hari pemesanan",
@@ -331,6 +334,7 @@ const id: Dict = {
   "adminBookingDetail.closed": "Ditutup",
   "adminBookingDetail.revoked": "Pemesanan dibatalkan admin",
   "adminBookingDetail.autoRejected": "permintaan lain ditolak otomatis",
+  "adminBookingDetail.autoNotifyHint": "Peminta menerima notifikasi otomatis saat disetujui, ditolak, atau dibatalkan.",
   "action.revoke": "Batalkan",
 
   "theme.toggle": "Ubah tema",

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useBooking } from "@/hooks/queries/useBookings";
 import { useProofs } from "@/hooks/queries/useProofs";
-import { useApproveBooking, useCloseBooking, useRejectBooking, useNotifyBooking, useRevokeBooking } from "@/hooks/mutations/useBookingMutations";
+import { useApproveBooking, useCloseBooking, useRejectBooking, useRevokeBooking } from "@/hooks/mutations/useBookingMutations";
 import { useT } from "@/i18n/LanguageProvider";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { ProofGallery } from "@/components/bookings/ProofGallery";
+import { BookingTimeline } from "@/components/bookings/BookingTimeline";
 import { fmtDate, fmtDateTime } from "@/lib/format";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
@@ -27,11 +28,9 @@ function AdminBookingReview() {
   const approve = useApproveBooking();
   const reject = useRejectBooking();
   const close = useCloseBooking();
-  const notify = useNotifyBooking();
   const revoke = useRevokeBooking();
   const t = useT();
   const [notes, setNotes] = useState("");
-  const canNotify = booking?.status === "approved" || booking?.status === "in_use" || booking?.status === "finished";
 
   if (isLoading || !booking) return <LoadingSkeleton rows={4} />;
 
@@ -95,14 +94,10 @@ function AdminBookingReview() {
               >
                 {t("action.revoke")}
               </Button>
-              <Button
-                variant="secondary"
-                disabled={!canNotify || notify.isPending}
-                onClick={() => act(() => notify.mutateAsync({ id: booking.id, message: notes || undefined }), t("admin.notifySent"))}
-              >
-                {t("admin.notify")}
-              </Button>
             </div>
+            <p className="text-xs text-muted-foreground">
+              {t("adminBookingDetail.autoNotifyHint")}
+            </p>
             {booking.status !== "finished" && booking.status !== "completed" && (
               <p className="text-xs text-muted-foreground">
                 {t("booking.closeOnlyFinished")}
@@ -114,6 +109,10 @@ function AdminBookingReview() {
       <section>
         <h2 className="mb-3 text-lg font-semibold">{t("bookingDetail.proofPhotos")}</h2>
         <ProofGallery proofs={proofs ?? []} />
+      </section>
+      <section>
+        <h2 className="mb-3 text-lg font-semibold">{t("bookingDetail.timeline")}</h2>
+        <BookingTimeline bookingId={booking.id} />
       </section>
     </div>
   );
