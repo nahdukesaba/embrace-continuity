@@ -118,6 +118,11 @@ function BookingDetail() {
         )}
         <ProofGallery proofs={proofs ?? []} />
       </section>
+
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold">{t("bookingDetail.timeline")}</h2>
+        <BookingTimeline bookingId={booking.id} />
+      </section>
     </div>
   );
 }
