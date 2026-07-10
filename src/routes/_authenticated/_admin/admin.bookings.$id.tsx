@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useBooking } from "@/hooks/queries/useBookings";
 import { useProofs } from "@/hooks/queries/useProofs";
-import { useApproveBooking, useCloseBooking, useRejectBooking, useNotifyBooking, useRevokeBooking } from "@/hooks/mutations/useBookingMutations";
+import { useApproveBooking, useCloseBooking, useRejectBooking, useRevokeBooking } from "@/hooks/mutations/useBookingMutations";
 import { useT } from "@/i18n/LanguageProvider";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
