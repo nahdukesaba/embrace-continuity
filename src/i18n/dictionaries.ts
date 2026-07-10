@@ -85,6 +85,7 @@ const en: Dict = {
   "bookingDetail.requested": "Requested",
   "bookingDetail.adminNotes": "Admin notes",
   "bookingDetail.proofPhotos": "Proof photos",
+  "bookingDetail.timeline": "Timeline",
   "bookingDetail.pendingHint": "Photos can be uploaded once your booking is approved.",
   "bookingDetail.windowHint": "Photo upload becomes available on your booked day.",
   "bookingDetail.startTitleWindow": "You can only start on the booked day",
