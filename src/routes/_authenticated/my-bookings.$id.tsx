@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProofUploader } from "@/components/bookings/ProofUploader";
 import { ProofGallery } from "@/components/bookings/ProofGallery";
+import { BookingTimeline } from "@/components/bookings/BookingTimeline";
 import { fmtDateTime, fmtBookingRange, daysBetweenInclusive, isTodayInRange } from "@/lib/format";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
