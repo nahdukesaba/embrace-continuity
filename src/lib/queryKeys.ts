@@ -10,6 +10,7 @@ export const qk = {
     list: (filters?: unknown) => ["bookings", "list", filters ?? {}] as const,
     mine: (filters?: unknown) => ["bookings", "mine", filters ?? {}] as const,
     detail: (id: string) => ["bookings", "detail", id] as const,
+    history: (id: string) => ["bookings", "history", id] as const,
   },
   proofs: {
     list: (bookingId: string) => ["proofs", "list", bookingId] as const,
