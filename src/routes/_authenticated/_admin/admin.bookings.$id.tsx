@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { ProofGallery } from "@/components/bookings/ProofGallery";
+import { BookingTimeline } from "@/components/bookings/BookingTimeline";
 import { fmtDate, fmtDateTime } from "@/lib/format";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
