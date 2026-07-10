@@ -148,11 +148,15 @@ export const bookingsApi = {
     const { data } = await http.put<ApiBookingRaw>(`/bookings/${id}/finish`);
     return normalizeBooking(data);
   },
-  async notify(id: string, message?: string) {
-    const { data } = await http.post<{ ok: true; sentAt: string; message: string }>(
-      `/bookings/${id}/notify`,
-      { message },
-    );
+  async notify(id: string, message?: string): Promise<NotifyResult> {
+    const { data } = await http.post<NotifyResult>(`/bookings/${id}/notify`, { message });
     return data;
   },
+  async history(id: string): Promise<TimelineEntry[]> {
+    const { data } = await http.get<TimelineEntry[] | { data: TimelineEntry[] }>(
+      `/bookings/${id}/history`,
+    );
+    return Array.isArray(data) ? data : data.data ?? [];
+  },
 };
+
