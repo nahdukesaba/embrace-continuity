@@ -16,7 +16,11 @@ export const bookingQueryOptions = (id: string) =>
 export const publicBookingsQueryOptions = (filters: BookingFilters = {}) =>
   queryOptions({ queryKey: qk.public.bookings(filters), queryFn: () => publicApi.allBookings(filters) });
 
+export const bookingHistoryQueryOptions = (id: string) =>
+  queryOptions({ queryKey: qk.bookings.history(id), queryFn: () => bookingsApi.history(id) });
+
 export const useBookings = (f: BookingFilters & { userId?: string } = {}) => useQuery(bookingsQueryOptions(f));
 export const useMyBookings = (userId: string, f: BookingFilters = {}) => useQuery(myBookingsQueryOptions(userId, f));
 export const useBooking = (id: string) => useQuery(bookingQueryOptions(id));
 export const usePublicBookings = (f: BookingFilters = {}) => useQuery(publicBookingsQueryOptions(f));
+export const useBookingHistory = (id: string) => useQuery(bookingHistoryQueryOptions(id));
