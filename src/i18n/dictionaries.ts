@@ -334,6 +334,7 @@ const id: Dict = {
   "adminBookingDetail.closed": "Ditutup",
   "adminBookingDetail.revoked": "Pemesanan dibatalkan admin",
   "adminBookingDetail.autoRejected": "permintaan lain ditolak otomatis",
+  "adminBookingDetail.autoNotifyHint": "Peminta menerima notifikasi otomatis saat disetujui, ditolak, atau dibatalkan.",
   "action.revoke": "Batalkan",
 
   "theme.toggle": "Ubah tema",
