@@ -153,12 +153,6 @@ export function ResourceForm({
               style={{ background: c }}
             />
           ))}
-          <Input
-            type="color"
-            value={color || "#2563eb"}
-            onChange={(e) => form.setValue("color", e.target.value)}
-            className="h-7 w-12 p-1"
-          />
         </div>
       </div>
       <div className="flex justify-end">

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PublicLayout } from "@/layouts/PublicLayout";
+import { MainLayout } from "@/layouts/MainLayout";
 import { CalendarView } from "@/components/calendar/CalendarView";
 import { usePublicBookings } from "@/hooks/queries/useBookings";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
@@ -23,9 +24,10 @@ function HomePage() {
   const { isAuthed } = useAuth();
   const { data, isLoading } = usePublicBookings();
   const t = useT();
+  const Layout = isAuthed ? MainLayout : PublicLayout;
 
   return (
-    <PublicLayout>
+    <Layout>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">{t("home.title")}</h1>
@@ -39,11 +41,8 @@ function HomePage() {
             <Button asChild><Link to="/register">{t("action.createAccount")}</Link></Button>
           </div>
         )}
-        {isAuthed && (
-          <Button asChild><Link to="/resources">{t("action.browseResources")}</Link></Button>
-        )}
       </div>
       {isLoading ? <LoadingSkeleton rows={6} /> : <CalendarView bookings={data ?? []} />}
-    </PublicLayout>
+    </Layout>
   );
 }
