@@ -94,14 +94,10 @@ function AdminBookingReview() {
               >
                 {t("action.revoke")}
               </Button>
-              <Button
-                variant="secondary"
-                disabled={!canNotify || notify.isPending}
-                onClick={() => act(() => notify.mutateAsync({ id: booking.id, message: notes || undefined }), t("admin.notifySent"))}
-              >
-                {t("admin.notify")}
-              </Button>
             </div>
+            <p className="text-xs text-muted-foreground">
+              {t("adminBookingDetail.autoNotifyHint")}
+            </p>
             {booking.status !== "finished" && booking.status !== "completed" && (
               <p className="text-xs text-muted-foreground">
                 {t("booking.closeOnlyFinished")}
@@ -113,6 +109,10 @@ function AdminBookingReview() {
       <section>
         <h2 className="mb-3 text-lg font-semibold">{t("bookingDetail.proofPhotos")}</h2>
         <ProofGallery proofs={proofs ?? []} />
+      </section>
+      <section>
+        <h2 className="mb-3 text-lg font-semibold">{t("bookingDetail.timeline")}</h2>
+        <BookingTimeline bookingId={booking.id} />
       </section>
     </div>
   );
