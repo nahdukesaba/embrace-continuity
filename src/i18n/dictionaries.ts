@@ -284,6 +284,7 @@ const id: Dict = {
   "bookingDetail.requested": "Diminta",
   "bookingDetail.adminNotes": "Catatan admin",
   "bookingDetail.proofPhotos": "Foto bukti",
+  "bookingDetail.timeline": "Riwayat",
   "bookingDetail.pendingHint": "Foto dapat diunggah setelah pemesanan disetujui.",
   "bookingDetail.windowHint": "Unggah foto tersedia pada hari pemesanan Anda.",
   "bookingDetail.startTitleWindow": "Hanya bisa memulai pada hari pemesanan",
