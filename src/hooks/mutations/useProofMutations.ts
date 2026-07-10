@@ -10,6 +10,7 @@ export const useUploadProof = (bookingId: string) => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: qk.proofs.list(bookingId) });
       qc.invalidateQueries({ queryKey: qk.bookings.detail(bookingId) });
+      qc.invalidateQueries({ queryKey: qk.bookings.history(bookingId) });
     },
   });
 };
