@@ -1,4 +1,4 @@
-import { LayoutDashboard, Boxes, CalendarDays, ClipboardList, Shield, Car as CarIcon, Users } from "lucide-react";
+import { LayoutDashboard, Boxes, CalendarDays, ClipboardList, Shield, Car as CarIcon, Users, BarChart3 } from "lucide-react";
 import type { Role } from "@/types";
 
 export interface NavItem {
