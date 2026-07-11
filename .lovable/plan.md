@@ -97,6 +97,9 @@ Public calendar continues on mocks until chunk 6.
 
 ## Chunk 6 — Public calendar + stats + reports (medium)
 
+**STATUS: DONE**
+
+
 1. `public.api.ts` → `GET /public/bookings/all`, `/public/bookings/resource/:id`. Map `PublicBooking` into calendar block shape.
 2. Remove `usePublicBookings` mock fallback; calendar view now unauthenticated.
 3. `stats.api.ts` → `GET /stats/overview`; update admin dashboard cards to real fields (`totalUsers`, `bookingsByStatus`, etc.).

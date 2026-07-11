@@ -2,7 +2,6 @@ export const env = {
   apiBaseUrl:
     import.meta.env.VITE_API_BASE_URL ??
     "https://ephsilalahi.tailf32e23.ts.net/api",
-  useMocks: (import.meta.env.VITE_USE_MOCKS ?? "true") !== "false",
   /**
    * When true, proof photos must be captured live from the device camera and
    * cannot be picked from the gallery. Defaults to true.

@@ -3,8 +3,7 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { StatCard } from "@/components/common/StatCard";
 import { useStats } from "@/hooks/queries/useStats";
 import { useBookings } from "@/hooks/queries/useBookings";
-import { Boxes, Clock, CheckCircle2, ClipboardList } from "lucide-react";
-import { BookingTable } from "@/components/bookings/BookingTable";
+import { Boxes, Clock, CheckCircle2, ClipboardList, Users } from "lucide-react";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
 import { GroupedBookingTable } from "@/components/bookings/GroupedBookingTable";
 import { ExportBookingsDialog } from "@/components/admin/ExportBookingsDialog";
@@ -19,6 +18,7 @@ function AdminDashboard() {
   const { data: stats } = useStats();
   const { data: pending, isLoading } = useBookings({ status: "pending" });
   const t = useT();
+  const by = stats?.bookingsByStatus ?? {};
   return (
     <div className="space-y-6">
       <PageHeader
@@ -26,10 +26,11 @@ function AdminDashboard() {
         description={t("adminDashboard.subtitle")}
         actions={<ExportBookingsDialog />}
       />
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <StatCard label={t("dashboard.stats.users")} value={stats?.totalUsers ?? "—"} icon={Users} />
         <StatCard label={t("dashboard.stats.resources")} value={stats?.totalResources ?? "—"} icon={Boxes} />
-        <StatCard label={t("dashboard.stats.pending")} value={stats?.pending ?? "—"} icon={Clock} />
-        <StatCard label={t("dashboard.stats.approved")} value={stats?.approved ?? "—"} icon={CheckCircle2} />
+        <StatCard label={t("dashboard.stats.pending")} value={by.pending ?? "—"} icon={Clock} />
+        <StatCard label={t("dashboard.stats.approved")} value={by.approved ?? "—"} icon={CheckCircle2} />
         <StatCard label={t("dashboard.stats.bookings")} value={stats?.totalBookings ?? "—"} icon={ClipboardList} />
       </div>
       <section>

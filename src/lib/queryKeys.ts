@@ -19,5 +19,8 @@ export const qk = {
     bookings: (filters?: unknown) => ["public", "bookings", filters ?? {}] as const,
     resourceBookings: (resourceId: string) => ["public", "bookings", "resource", resourceId] as const,
   },
-  stats: { overview: ["stats", "overview"] as const },
+  stats: {
+    overview: ["stats", "overview"] as const,
+    insights: (range: { from: string; to: string }) => ["stats", "insights", range] as const,
+  },
 };

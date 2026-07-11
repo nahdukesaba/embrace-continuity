@@ -30,9 +30,10 @@ function Dashboard() {
       />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label={t("dashboard.stats.resources")} value={stats?.totalResources ?? "—"} icon={Boxes} />
-        <StatCard label={t("dashboard.stats.pending")} value={stats?.pending ?? "—"} icon={Clock} />
-        <StatCard label={t("dashboard.stats.approved")} value={stats?.approved ?? "—"} icon={CheckCircle2} />
-        <StatCard label={t("dashboard.stats.completed")} value={stats?.completed ?? "—"} icon={ClipboardList} />
+        <StatCard label={t("dashboard.stats.pending")} value={stats?.bookingsByStatus?.pending ?? "—"} icon={Clock} />
+        <StatCard label={t("dashboard.stats.approved")} value={stats?.bookingsByStatus?.approved ?? "—"} icon={CheckCircle2} />
+        <StatCard label={t("dashboard.stats.completed")} value={stats?.bookingsByStatus?.completed ?? "—"} icon={ClipboardList} />
+
       </div>
       <section>
         <h2 className="mb-3 text-lg font-semibold">{t("dashboard.yourBookings")}</h2>
