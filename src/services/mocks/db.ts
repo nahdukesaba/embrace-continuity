@@ -74,12 +74,23 @@ export const mockDb = {
   },
   async createResource(input: CreateResourceInput): Promise<Resource> {
     await delay();
-    const base = { id: uid("r"), createdAt: nowIso(), name: input.name, description: input.description, photoUrl: input.photoUrl, isAvailable: input.isAvailable, color: input.color || undefined };
+    const base = {
+      id: uid("r"),
+      createdAt: nowIso(),
+      updatedAt: nowIso(),
+      name: input.name,
+      description: input.description,
+      location: input.location ?? "",
+      photoUrl: input.photoUrl,
+      isAvailable: input.isAvailable,
+      color: input.color || undefined,
+      capacity: input.capacity ?? 1,
+    };
     let r: Resource;
     if (input.type === "room") {
-      r = { ...base, type: "room", location: input.location ?? "", capacity: input.capacity ?? 1, equipment: input.equipment ?? [] };
+      r = { ...base, type: "room" };
     } else if (input.type === "bike") {
-      r = { ...base, type: "bike", licensePlate: input.licensePlate ?? "", fuelType: (input.fuelType as "gasoline" | "electric") ?? "gasoline", engineCc: input.engineCc };
+      r = { ...base, type: "bike", licensePlate: input.licensePlate ?? "", fuelType: (input.fuelType as "gasoline" | "electric") ?? "gasoline" };
     } else {
       r = { ...base, type: "car", licensePlate: input.licensePlate ?? "", fuelType: (input.fuelType as "gasoline" | "diesel" | "electric" | "hybrid") ?? "gasoline" };
     }

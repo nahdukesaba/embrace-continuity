@@ -9,9 +9,7 @@ export const resourceSchema = z.object({
   color: z.string().regex(/^#([0-9a-fA-F]{6})$/).optional().or(z.literal("")),
   location: z.string().optional(),
   capacity: z.coerce.number().int().min(1).optional(),
-  equipment: z.array(z.string()).optional(),
   licensePlate: z.string().optional(),
   fuelType: z.enum(["gasoline", "diesel", "electric", "hybrid"]).optional(),
-  engineCc: z.coerce.number().int().min(50).optional(),
 });
 export type ResourceValues = z.infer<typeof resourceSchema>;

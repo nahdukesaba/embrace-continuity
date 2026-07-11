@@ -33,11 +33,9 @@ export function ResourceForm({
       isAvailable: defaultValues?.isAvailable ?? true,
       color: defaultValues?.color ?? "",
       location: defaultValues && defaultValues.type === "room" ? defaultValues.location : "",
-      capacity: defaultValues && defaultValues.type === "room" ? defaultValues.capacity : 1,
-      equipment: defaultValues && defaultValues.type === "room" ? defaultValues.equipment : [],
+      capacity: defaultValues?.capacity ?? 1,
       licensePlate: defaultValues && (defaultValues.type === "car" || defaultValues.type === "bike") ? defaultValues.licensePlate : "",
       fuelType: defaultValues && (defaultValues.type === "car" || defaultValues.type === "bike") ? defaultValues.fuelType : "gasoline",
-      engineCc: defaultValues && defaultValues.type === "bike" ? defaultValues.engineCc : undefined,
     },
   });
   const type = form.watch("type");
@@ -83,7 +81,7 @@ export function ResourceForm({
           </div>
         </div>
       ) : type === "car" ? (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-2">
             <Label>License plate</Label>
             <Input {...form.register("licensePlate")} />
@@ -100,16 +98,16 @@ export function ResourceForm({
               </SelectContent>
             </Select>
           </div>
+          <div className="space-y-2">
+            <Label>Capacity</Label>
+            <Input type="number" min={1} {...form.register("capacity")} />
+          </div>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-2">
             <Label>License plate</Label>
             <Input {...form.register("licensePlate")} />
-          </div>
-          <div className="space-y-2">
-            <Label>Engine (cc)</Label>
-            <Input type="number" min={50} {...form.register("engineCc")} />
           </div>
           <div className="space-y-2">
             <Label>Fuel</Label>
@@ -120,6 +118,10 @@ export function ResourceForm({
                 <SelectItem value="electric">Electric</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="space-y-2">
+            <Label>Capacity</Label>
+            <Input type="number" min={1} {...form.register("capacity")} />
           </div>
         </div>
       )}
