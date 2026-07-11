@@ -31,29 +31,33 @@ export interface ResourceBase {
   name: string;
   description: string;
   type: ResourceType;
+  location: string;
   photoUrl?: string;
   isAvailable: boolean;
   color?: string;
+  capacity?: number;
+  licensePlate?: string;
+  fuelType?: "gasoline" | "diesel" | "electric" | "hybrid";
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface Room extends ResourceBase {
   type: "room";
-  location: string;
   capacity: number;
-  equipment: string[];
 }
 
 export interface Car extends ResourceBase {
   type: "car";
+  capacity: number;
   licensePlate: string;
   fuelType: "gasoline" | "diesel" | "electric" | "hybrid";
 }
 
 export interface Bike extends ResourceBase {
   type: "bike";
+  capacity: number;
   licensePlate: string;
-  engineCc?: number;
   fuelType: "gasoline" | "electric";
 }
 
@@ -145,11 +149,9 @@ export interface CreateResourceInput {
   // room
   location?: string;
   capacity?: number;
-  equipment?: string[];
   // car / bike
   licensePlate?: string;
   fuelType?: Car["fuelType"] | Bike["fuelType"];
-  engineCc?: number;
 }
 
 export interface AuthSession {

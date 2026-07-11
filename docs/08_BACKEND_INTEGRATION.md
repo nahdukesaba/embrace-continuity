@@ -173,6 +173,15 @@ Avoid transforming payloads into unrelated structures.
 
 Keep DTOs close to backend definitions.
 
+### Resources Contract
+
+`/resources` returns shared resource fields for every type: `id`, `type`,
+`name`, `description`, `location`, `photoUrl`, `isAvailable`, `color`,
+`capacity`, `licensePlate`, `fuelType`, `createdAt`, and `updatedAt`.
+
+The frontend `Resource` DTO must not require legacy `equipment` or
+`engineCc` fields, because they are not included in the API response.
+
 ---
 
 ## Synchronization Strategy

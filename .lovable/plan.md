@@ -66,7 +66,8 @@ Split checkpoint: 4a resources, then 4b bookings.
 
 **4a Resources**
 - `resources.api.ts` → real `GET/POST/PUT/DELETE /resources`.
-- Reshape `Resource` union to match doc (`amenities`, `seats`, `location` required, `photoUrl` optional).
+- Reshape `Resource` union to match the live response (`location`, `capacity`,
+  `color`, `licensePlate`, and `fuelType`; no `equipment` or `engineCc`).
 - Update `ResourceForm`, `ResourceCard`, `resources.$id.tsx`, admin resources page.
 
 **4b Bookings CRUD + list/detail**

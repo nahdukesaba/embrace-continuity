@@ -39,7 +39,6 @@ function ResourceDetailPage() {
               <>
                 <p><span className="text-muted-foreground">{t("resource.location")}:</span> {resource.location}</p>
                 <p><span className="text-muted-foreground">{t("resource.capacity")}:</span> {resource.capacity}</p>
-                <p><span className="text-muted-foreground">{t("resource.equipment")}:</span> {resource.equipment.join(", ") || "—"}</p>
               </>
             ) : (
               <>

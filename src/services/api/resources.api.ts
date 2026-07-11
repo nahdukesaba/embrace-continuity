@@ -1,11 +1,7 @@
 import { http } from "@/services/http";
 import type { CreateResourceInput, Resource, ResourceFilters } from "@/types";
 
-/**
- * Backend Data API. The frontend `Resource` union is preserved; if the
- * backend response uses different keys (e.g. `amenities`/`seats`) update
- * the normalizers below.
- */
+/** Backend Data API. `Resource` mirrors the resources endpoint response. */
 export const resourcesApi = {
   async list(filters: ResourceFilters = {}): Promise<Resource[]> {
     const params: Record<string, string> = {};

@@ -63,3 +63,10 @@ Even if years apart.
 The documentation is the project's permanent memory.
 
 Not any individual AI conversation.
+
+## Resources API Contract
+
+As of 2026-07-11, the Resources API provides a shared `capacity` field and
+optional `color`, `licensePlate`, and `fuelType` fields. It does not provide
+legacy `equipment` or `engineCc` fields. Keep the frontend DTO, form payload,
+and resource detail UI aligned with this response shape.
