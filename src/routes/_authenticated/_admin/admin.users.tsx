@@ -17,7 +17,7 @@ import type { AppUser, UserStatus } from "@/types";
 import { fmtDate } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/_admin/admin/users")({
-  head: () => ({ meta: [{ title: "Users · SILAP Aset" }] }),
+  head: () => ({ meta: [{ title: "Users · SILAPET" }] }),
   component: AdminUsersPage,
 });
 

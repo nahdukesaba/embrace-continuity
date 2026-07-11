@@ -21,7 +21,7 @@ import { useT } from "@/i18n/LanguageProvider";
 import { colorForResource } from "@/lib/colors";
 
 export const Route = createFileRoute("/_authenticated/_admin/admin/reports")({
-  head: () => ({ meta: [{ title: "Reports · SILAP Aset" }] }),
+  head: () => ({ meta: [{ title: "Reports · SILAPET" }] }),
   component: ReportsPage,
 });
 

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { useT } from "@/i18n/LanguageProvider";
 
 /**
- * SILAP Aset brand mark: a monogram badge + wordmark, replacing the
+ * SILAPET brand mark: a monogram badge + wordmark, replacing the
  * generic lucide "Boxes" icon previously duplicated in AppSidebar,
  * AuthLayout, and PublicHeader.
  */
