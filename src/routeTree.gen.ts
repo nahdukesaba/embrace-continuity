@@ -25,6 +25,7 @@ import { Route as AuthenticatedMyBookingsIdRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
 import { Route as AuthenticatedAdminAdminUsersRouteImport } from './routes/_authenticated/_admin/admin.users'
 import { Route as AuthenticatedAdminAdminResourcesRouteImport } from './routes/_authenticated/_admin/admin.resources'
+import { Route as AuthenticatedAdminAdminReportsRouteImport } from './routes/_authenticated/_admin/admin.reports'
 import { Route as AuthenticatedAdminAdminBookingsIndexRouteImport } from './routes/_authenticated/_admin/admin.bookings.index'
 import { Route as AuthenticatedAdminAdminBookingsIdRouteImport } from './routes/_authenticated/_admin/admin.bookings.$id'
 
@@ -113,6 +114,12 @@ const AuthenticatedAdminAdminResourcesRoute =
     path: '/admin/resources',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminAdminReportsRoute =
+  AuthenticatedAdminAdminReportsRouteImport.update({
+    id: '/admin/reports',
+    path: '/admin/reports',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAdminBookingsIndexRoute =
   AuthenticatedAdminAdminBookingsIndexRouteImport.update({
     id: '/admin/bookings/',
@@ -138,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/resources/$id': typeof AuthenticatedResourcesIdRoute
   '/my-bookings/': typeof AuthenticatedMyBookingsIndexRoute
   '/resources/': typeof AuthenticatedResourcesIndexRoute
+  '/admin/reports': typeof AuthenticatedAdminAdminReportsRoute
   '/admin/resources': typeof AuthenticatedAdminAdminResourcesRoute
   '/admin/users': typeof AuthenticatedAdminAdminUsersRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
@@ -156,6 +164,7 @@ export interface FileRoutesByTo {
   '/resources/$id': typeof AuthenticatedResourcesIdRoute
   '/my-bookings': typeof AuthenticatedMyBookingsIndexRoute
   '/resources': typeof AuthenticatedResourcesIndexRoute
+  '/admin/reports': typeof AuthenticatedAdminAdminReportsRoute
   '/admin/resources': typeof AuthenticatedAdminAdminResourcesRoute
   '/admin/users': typeof AuthenticatedAdminAdminUsersRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
@@ -177,6 +186,7 @@ export interface FileRoutesById {
   '/_authenticated/resources/$id': typeof AuthenticatedResourcesIdRoute
   '/_authenticated/my-bookings/': typeof AuthenticatedMyBookingsIndexRoute
   '/_authenticated/resources/': typeof AuthenticatedResourcesIndexRoute
+  '/_authenticated/_admin/admin/reports': typeof AuthenticatedAdminAdminReportsRoute
   '/_authenticated/_admin/admin/resources': typeof AuthenticatedAdminAdminResourcesRoute
   '/_authenticated/_admin/admin/users': typeof AuthenticatedAdminAdminUsersRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
@@ -197,6 +207,7 @@ export interface FileRouteTypes {
     | '/resources/$id'
     | '/my-bookings/'
     | '/resources/'
+    | '/admin/reports'
     | '/admin/resources'
     | '/admin/users'
     | '/admin/'
@@ -215,6 +226,7 @@ export interface FileRouteTypes {
     | '/resources/$id'
     | '/my-bookings'
     | '/resources'
+    | '/admin/reports'
     | '/admin/resources'
     | '/admin/users'
     | '/admin'
@@ -235,6 +247,7 @@ export interface FileRouteTypes {
     | '/_authenticated/resources/$id'
     | '/_authenticated/my-bookings/'
     | '/_authenticated/resources/'
+    | '/_authenticated/_admin/admin/reports'
     | '/_authenticated/_admin/admin/resources'
     | '/_authenticated/_admin/admin/users'
     | '/_authenticated/_admin/admin/'
@@ -366,6 +379,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdminResourcesRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/_admin/admin/reports': {
+      id: '/_authenticated/_admin/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AuthenticatedAdminAdminReportsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/_admin/admin/bookings/': {
       id: '/_authenticated/_admin/admin/bookings/'
       path: '/admin/bookings'
@@ -384,6 +404,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminAdminReportsRoute: typeof AuthenticatedAdminAdminReportsRoute
   AuthenticatedAdminAdminResourcesRoute: typeof AuthenticatedAdminAdminResourcesRoute
   AuthenticatedAdminAdminUsersRoute: typeof AuthenticatedAdminAdminUsersRoute
   AuthenticatedAdminAdminIndexRoute: typeof AuthenticatedAdminAdminIndexRoute
@@ -393,6 +414,7 @@ interface AuthenticatedAdminRouteRouteChildren {
 
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
+    AuthenticatedAdminAdminReportsRoute: AuthenticatedAdminAdminReportsRoute,
     AuthenticatedAdminAdminResourcesRoute:
       AuthenticatedAdminAdminResourcesRoute,
     AuthenticatedAdminAdminUsersRoute: AuthenticatedAdminAdminUsersRoute,
