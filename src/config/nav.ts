@@ -17,4 +17,5 @@ export const NAV_ITEMS: NavItem[] = [
   { labelKey: "nav.manageResources", to: "/admin/resources", icon: CarIcon, roles: ["admin"] },
   { labelKey: "nav.reviewBookings", to: "/admin/bookings", icon: ClipboardList, roles: ["admin"] },
   { labelKey: "nav.manageUsers", to: "/admin/users", icon: Users, roles: ["admin"] },
+  { labelKey: "nav.reports", to: "/admin/reports", icon: BarChart3, roles: ["admin"] },
 ];
