@@ -17,11 +17,13 @@ import { addHoursHHmm, fmtBookingRange } from "@/lib/format";
 import { useEffect, useRef } from "react";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { colorForResource } from "@/lib/colors";
+import { defaultBookingStart, isoToJakartaYMD } from "@/lib/bookingTime";
+import { BOOKING_TIME_STEP_MIN } from "@/config/constants";
 
 export function BookingForm({
-  resourceId,
-  onCreated,
-}: {
+                              resourceId,
+                              onCreated,
+                            }: {
   resourceId?: string;
   onCreated?: () => void;
 }) {
@@ -33,7 +35,7 @@ export function BookingForm({
     resolver: zodResolver(bookingSchema) as never,
     defaultValues: {
       resourceId: resourceId ?? "",
-      date: new Date().toISOString().slice(0, 10),
+      date: isoToJakartaYMD(new Date().toISOString()),
       startTime: "09:00",
       endTime: "10:00",
       numberOfDays: 1,
@@ -55,7 +57,7 @@ export function BookingForm({
   const rangeEnd = formatISO(addDays(new Date(selectedDate || new Date()), Math.max(1, numDays) - 1), { representation: "date" });
   const selectedResource = (resources ?? []).find((r) => r.id === selectedResourceId);
   const { data: sameDayBookings } = usePublicBookings(
-    selectedResourceId ? { resourceId: selectedResourceId } : {},
+      selectedResourceId ? { resourceId: selectedResourceId } : {},
   );
   const overlappingBookings = (sameDayBookings ?? []).filter((b) => {
     if (!selectedResourceId || b.resourceId !== selectedResourceId) return false;
@@ -63,6 +65,19 @@ export function BookingForm({
     // any date overlap between [selectedDate, rangeEnd] and [b.date, bEnd]
     return !(bEnd < selectedDate || b.date > rangeEnd);
   });
+
+  const autoSetForResourceRef = useRef<string | null>(null);
+  useEffect(() => {
+    const today = isoToJakartaYMD(new Date().toISOString());
+    if (!selectedResourceId || selectedDate !== today || !sameDayBookings) return;
+    if (autoSetForResourceRef.current === selectedResourceId) return;
+    autoSetForResourceRef.current = selectedResourceId;
+    const approvedToday = sameDayBookings.filter(
+        (b) => b.resourceId === selectedResourceId && b.status === "approved" && b.date === today,
+    );
+    const start = defaultBookingStart(approvedToday, BOOKING_TIME_STEP_MIN);
+    form.setValue("startTime", start, { shouldValidate: true });
+  }, [selectedResourceId, sameDayBookings, selectedDate, form]);
 
   async function onSubmit(values: BookingValues) {
     if (!user) return;
@@ -89,8 +104,8 @@ export function BookingForm({
       if (err?.status === 409) {
         const w = err.conflictWith;
         const detail = w
-          ? ` — already approved for ${w.userFullName ?? "another user"} on ${w.date ?? ""} ${w.startTime ?? ""}–${w.endTime ?? ""}`
-          : "";
+            ? ` — already approved for ${w.userFullName ?? "another user"} on ${w.date ?? ""} ${w.startTime ?? ""}–${w.endTime ?? ""}`
+            : "";
         toast.error(`Booking conflict: this slot is already taken${detail}. Try a different time or date.`);
       } else {
         toast.error(err?.message ?? "Failed to create booking");
@@ -99,114 +114,114 @@ export function BookingForm({
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-      {showResourcePicker && (
-        <div className="space-y-2">
-          <Label>Resource</Label>
-          <Controller
-            control={form.control}
-            name="resourceId"
-            render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger><SelectValue placeholder="Pick a resource" /></SelectTrigger>
-                <SelectContent>
-                  {(resources ?? []).map((r) => (
-                    <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          />
-          {form.formState.errors.resourceId && (
-            <p className="text-xs text-destructive">{form.formState.errors.resourceId.message}</p>
-          )}
-        </div>
-      )}
-      {selectedResource && (
-        <div className="overflow-hidden rounded-lg border border-border bg-card">
-          {selectedResource.photoUrl && (
-            <img src={selectedResource.photoUrl} alt={selectedResource.name} className="aspect-video w-full object-cover" />
-          )}
-          <div className="space-y-1 p-3 text-sm">
-            <div className="flex items-center gap-2">
-              <span className="inline-block size-3 rounded-full" style={{ background: colorForResource(selectedResource.id, selectedResource) }} />
-              <span className="font-medium">{selectedResource.name}</span>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {showResourcePicker && (
+            <div className="space-y-2">
+              <Label>Resource</Label>
+              <Controller
+                  control={form.control}
+                  name="resourceId"
+                  render={({ field }) => (
+                      <Select value={field.value} onValueChange={field.onChange}>
+                        <SelectTrigger><SelectValue placeholder="Pick a resource" /></SelectTrigger>
+                        <SelectContent>
+                          {(resources ?? []).map((r) => (
+                              <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                  )}
+              />
+              {form.formState.errors.resourceId && (
+                  <p className="text-xs text-destructive">{form.formState.errors.resourceId.message}</p>
+              )}
             </div>
-            {selectedResource.description && (
-              <p className="text-xs text-muted-foreground line-clamp-2">{selectedResource.description}</p>
+        )}
+        {selectedResource && (
+            <div className="overflow-hidden rounded-lg border border-border bg-card">
+              {selectedResource.photoUrl && (
+                  <img src={selectedResource.photoUrl} alt={selectedResource.name} className="aspect-video w-full object-cover" />
+              )}
+              <div className="space-y-1 p-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="inline-block size-3 rounded-full" style={{ background: colorForResource(selectedResource.id, selectedResource) }} />
+                  <span className="font-medium">{selectedResource.name}</span>
+                </div>
+                {selectedResource.description && (
+                    <p className="text-xs text-muted-foreground line-clamp-2">{selectedResource.description}</p>
+                )}
+              </div>
+            </div>
+        )}
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="space-y-2">
+            <Label>Start date</Label>
+            <Input type="date" {...form.register("date")} />
+          </div>
+          <div className="space-y-2">
+            <Label>Number of days</Label>
+            <Input type="number" min={1} max={30} {...form.register("numberOfDays", { valueAsNumber: true })} />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-2">
+            <Label>Start time</Label>
+            <Controller
+                control={form.control}
+                name="startTime"
+                render={({ field }) => <CircularTimePicker value={field.value} onChange={field.onChange} />}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>End time</Label>
+            <Controller
+                control={form.control}
+                name="endTime"
+                render={({ field }) => <CircularTimePicker value={field.value} onChange={field.onChange} />}
+            />
+            {form.formState.errors.endTime && (
+                <p className="text-xs text-destructive">{form.formState.errors.endTime.message}</p>
             )}
           </div>
         </div>
-      )}
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label>Start date</Label>
-          <Input type="date" {...form.register("date")} />
-        </div>
-        <div className="space-y-2">
-          <Label>Number of days</Label>
-          <Input type="number" min={1} max={30} {...form.register("numberOfDays", { valueAsNumber: true })} />
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-2">
-          <Label>Start time</Label>
-          <Controller
-            control={form.control}
-            name="startTime"
-            render={({ field }) => <CircularTimePicker value={field.value} onChange={field.onChange} />}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label>End time</Label>
-          <Controller
-            control={form.control}
-            name="endTime"
-            render={({ field }) => <CircularTimePicker value={field.value} onChange={field.onChange} />}
-          />
-          {form.formState.errors.endTime && (
-            <p className="text-xs text-destructive">{form.formState.errors.endTime.message}</p>
-          )}
-        </div>
-      </div>
-      {selectedResourceId && overlappingBookings.length > 0 && (
-        <div className="space-y-2 rounded-md border border-border bg-muted/30 p-3">
-          <p className="text-xs font-medium text-muted-foreground">
-            Existing bookings overlapping this date range ({overlappingBookings.length})
-          </p>
-          <ul className="space-y-1.5 text-xs">
-            {overlappingBookings.slice(0, 5).map((b) => (
-              <li key={b.id} className="flex items-center justify-between gap-2">
+        {selectedResourceId && overlappingBookings.length > 0 && (
+            <div className="space-y-2 rounded-md border border-border bg-muted/30 p-3">
+              <p className="text-xs font-medium text-muted-foreground">
+                Existing bookings overlapping this date range ({overlappingBookings.length})
+              </p>
+              <ul className="space-y-1.5 text-xs">
+                {overlappingBookings.slice(0, 5).map((b) => (
+                    <li key={b.id} className="flex items-center justify-between gap-2">
                 <span className="truncate">
                   {fmtBookingRange(b.date, b.endDate, b.startTime, b.endTime)}
                   {b.user?.fullName && <span className="text-muted-foreground"> · {b.user.fullName}</span>}
                 </span>
-                <StatusBadge status={b.status} />
-              </li>
-            ))}
-            {overlappingBookings.length > 5 && (
-              <li className="text-[11px] text-muted-foreground">+{overlappingBookings.length - 5} more</li>
-            )}
-          </ul>
-          <p className="text-[11px] text-muted-foreground">
-            You may still submit a request; overlapping pending requests are allowed until one is approved.
-          </p>
-        </div>
-      )}
-      <div className="space-y-2">
-        <Label>Purpose</Label>
-        <Textarea
-          rows={3}
-          placeholder="Why do you need this resource?"
-          {...form.register("purpose")}
-        />
-        {form.formState.errors.purpose && (
-          <p className="text-xs text-destructive">{form.formState.errors.purpose.message}</p>
+                      <StatusBadge status={b.status} />
+                    </li>
+                ))}
+                {overlappingBookings.length > 5 && (
+                    <li className="text-[11px] text-muted-foreground">+{overlappingBookings.length - 5} more</li>
+                )}
+              </ul>
+              <p className="text-[11px] text-muted-foreground">
+                You may still submit a request; overlapping pending requests are allowed until one is approved.
+              </p>
+            </div>
         )}
-      </div>
-      <Button type="submit" disabled={create.isPending} className="w-full">
-        {create.isPending ? "Submitting..." : "Request booking"}
-      </Button>
-    </form>
+        <div className="space-y-2">
+          <Label>Purpose</Label>
+          <Textarea
+              rows={3}
+              placeholder="Why do you need this resource?"
+              {...form.register("purpose")}
+          />
+          {form.formState.errors.purpose && (
+              <p className="text-xs text-destructive">{form.formState.errors.purpose.message}</p>
+          )}
+        </div>
+        <Button type="submit" disabled={create.isPending} className="w-full">
+          {create.isPending ? "Submitting..." : "Request booking"}
+        </Button>
+      </form>
   );
 }
