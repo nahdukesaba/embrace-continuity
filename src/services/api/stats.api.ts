@@ -23,11 +23,12 @@ export const statsApi = {
   },
   async insights(params: { from: string; to: string }): Promise<BookingInsights> {
     const { data } = await http.get<BookingInsights | { data: BookingInsights }>(
-      "/stats/bookings/insights",
+      "/reports/bookings/insights",
       { params },
     );
     return unwrap(data);
   },
+
   /**
    * Downloads booking rows as CSV for the given date range. Server returns a
    * text/csv payload with a Content-Disposition filename.
@@ -35,7 +36,7 @@ export const statsApi = {
   async exportCsv(params: { from: string; to: string }): Promise<{ blob: Blob; filename: string }> {
     const token = useAuthStore.getState().token;
     const qs = new URLSearchParams(params).toString();
-    const res = await fetch(`${env.apiBaseUrl}/stats/bookings/export?${qs}`, {
+    const res = await fetch(`${env.apiBaseUrl}/reports/bookings/export?${qs}`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
     if (!res.ok) {
