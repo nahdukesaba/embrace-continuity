@@ -16,6 +16,8 @@ import { BookingTimeline } from "@/components/bookings/BookingTimeline";
 import { fmtDate, fmtDateTime } from "@/lib/format";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
+import { friendlyError } from "@/lib/errors";
+
 
 export const Route = createFileRoute("/_authenticated/_admin/admin/bookings/$id")({
   head: () => ({ meta: [{ title: "Review Booking · Admin" }] }),
@@ -37,8 +39,9 @@ function AdminBookingReview() {
 
   const act = async (fn: () => Promise<unknown>, msg: string) => {
     try { await fn(); toast.success(msg); }
-    catch (e: unknown) { toast.error(e instanceof Error ? e.message : "Failed"); }
+    catch (e: unknown) { toast.error(friendlyError(e)); }
   };
+
 
   const canRevoke = booking.status === "approved" || booking.status === "in_use";
 
