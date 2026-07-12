@@ -8,6 +8,7 @@ import {
 } from "@/hooks/mutations/useBookingMutations";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
+import { ResourceColorDot } from "@/components/common/ResourceColorDot";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -51,11 +52,12 @@ function BookingDetail() {
       <Button asChild variant="ghost" size="sm" className="w-fit">
         <Link to="/my-bookings"><ArrowLeft className="mr-1 size-4" />{t("action.back")}</Link>
       </Button>
-      <PageHeader
-        title={booking.resource?.name ?? "Booking"}
-        description={`${fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}${days > 1 ? ` · ${days} ${t("bookingDetail.daysSuffix")}` : ""}`}
-        actions={<StatusBadge status={booking.status} />}
-      />
+        <PageHeader
+            title={booking.resource?.name ?? "Booking"}
+            titlePrefix={<ResourceColorDot resourceId={booking.resourceId} resource={booking.resource} />}
+            description={`${fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}${days > 1 ? ` · ${days} ${t("bookingDetail.daysSuffix")}` : ""}`}
+            actions={<StatusBadge status={booking.status} />}
+        />
       <Card>
         <CardContent className="space-y-2 p-4 text-sm">
           <p><span className="text-muted-foreground">{t("bookingDetail.requested")}:</span> {fmtDateTime(booking.createdAt)}</p>

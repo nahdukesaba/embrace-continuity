@@ -6,6 +6,7 @@ import { useApproveBooking, useCloseBooking, useRejectBooking, useRevokeBooking 
 import { useT } from "@/i18n/LanguageProvider";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
+import { ResourceColorDot } from "@/components/common/ResourceColorDot";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -47,9 +48,10 @@ function AdminBookingReview() {
         <Link to="/admin/bookings"><ArrowLeft className="mr-1 size-4" />{t("action.back")}</Link>
       </Button>
       <PageHeader
-        title={booking.resource?.name ?? "Booking"}
-        description={`${fmtDate(booking.date)} · ${booking.startTime} – ${booking.endTime}`}
-        actions={<StatusBadge status={booking.status} />}
+          title={booking.resource?.name ?? "Booking"}
+          titlePrefix={<ResourceColorDot resourceId={booking.resourceId} resource={booking.resource} />}
+          description={`${fmtDate(booking.date)} · ${booking.startTime} – ${booking.endTime}`}
+          actions={<StatusBadge status={booking.status} />}
       />
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
