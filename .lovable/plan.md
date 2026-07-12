@@ -113,10 +113,15 @@ Public calendar continues on mocks until chunk 6.
 
 ## Chunk 7 — Polish & verification (small)
 
-- Error boundaries: map every documented error code to a friendly toast (`VALIDATION_ERROR`, `PAST_BOOKING`, `NOT_START_DAY`, `PHOTO_REQUIRED`, `NOTIFY_NOT_ALLOWED`, …).
+**STATUS: DONE**
+
+- Error boundaries: `friendlyError(e)` in `src/lib/errors.ts` maps documented backend codes (`VALIDATION_ERROR`, `BOOKING_CONFLICT`, `PAST_BOOKING`, `NOT_START_DAY`, `PHOTO_REQUIRED`, `NOTIFY_NOT_ALLOWED`, `ACCOUNT_PENDING_APPROVAL`, `ACCOUNT_REJECTED`, `RESOURCE_UNAVAILABLE`, `FORBIDDEN`, `UNAUTHORIZED`, `NOT_FOUND`) to friendly copy and is wired into admin/user booking action toasts.
+- Public calendar now scopes `/public/bookings/all` to the viewed `month`+`year` and preserves the backend-provided `user`/`resource`, fixing "Booked by: —" in the details dialog.
+- Reports moved to `/reports/bookings/insights` and `/reports/bookings/export`; `/stats/overview` unchanged.
 - i18n sweep for all new strings (EN + ID).
 - README section: env vars (`VITE_API_BASE_URL`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`), CORS reminder for the Tailscale host.
 - Manual smoke test checklist against a live backend: health, register → pending screen, admin approve, login, create booking, approve (autoReject toast), upload before → start, upload after → finish, notify, revoke, reports CSV download.
+
 
 ---
 
