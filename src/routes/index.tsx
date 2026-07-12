@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+
 import { PublicLayout } from "@/layouts/PublicLayout";
 import { MainLayout } from "@/layouts/MainLayout";
 import { CalendarView } from "@/components/calendar/CalendarView";
@@ -22,7 +24,12 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const { isAuthed } = useAuth();
-  const { data, isLoading } = usePublicBookings();
+  const now = new Date();
+  const [ym, setYm] = useState<{ year: number; month: number }>({
+    year: now.getFullYear(),
+    month: now.getMonth() + 1,
+  });
+  const { data, isLoading } = usePublicBookings({ year: ym.year, month: ym.month });
   const t = useT();
   const Layout = isAuthed ? MainLayout : PublicLayout;
 
@@ -42,7 +49,14 @@ function HomePage() {
           </div>
         )}
       </div>
-      {isLoading ? <LoadingSkeleton rows={6} /> : <CalendarView bookings={data ?? []} />}
+      {isLoading ? (
+        <LoadingSkeleton rows={6} />
+      ) : (
+        <CalendarView
+          bookings={data ?? []}
+          onMonthChange={(year, month) => setYm({ year, month })}
+        />
+      )}
     </Layout>
   );
 }

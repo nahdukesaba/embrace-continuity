@@ -18,6 +18,8 @@ import { BookingTimeline } from "@/components/bookings/BookingTimeline";
 import { fmtDateTime, fmtBookingRange, daysBetweenInclusive, isTodayInRange } from "@/lib/format";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
+import { friendlyError } from "@/lib/errors";
+
 import { useT } from "@/i18n/LanguageProvider";
 
 export const Route = createFileRoute("/_authenticated/my-bookings/$id")({

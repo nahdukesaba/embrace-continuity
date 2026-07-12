@@ -196,10 +196,20 @@ export interface PaginatedBookings {
 export interface PublicBooking {
   id: string;
   resourceId: string;
+  userId?: string;
   startTime: string;
   endTime: string;
+  date?: string;
+  endDate?: string;
   status: "pending" | "approved" | "in_use" | "finished";
+  purpose?: string;
+  adminNotes?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  resource?: Resource;
+  user?: BookingUserRef | AppUser;
 }
+
 
 export interface ApproveBookingResponse {
   booking: BookingWithDetails;

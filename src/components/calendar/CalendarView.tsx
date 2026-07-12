@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   addDays, addMonths, addWeeks, endOfMonth, endOfWeek, format, isSameDay, parseISO,
   isSameMonth, isToday, startOfMonth, startOfWeek, subMonths, subWeeks,
 } from "date-fns";
+
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Booking, Resource  } from "@/types";
@@ -25,10 +26,22 @@ function statusStyle(status: Booking["status"]) {
   return { opacity: 1, borderStyle: "solid" as const };
 }
 
-export function CalendarView({ bookings }: { bookings: Booking[] }) {
+export function CalendarView({
+  bookings,
+  onMonthChange,
+}: {
+  bookings: Booking[];
+  onMonthChange?: (year: number, month: number) => void;
+}) {
   const [view, setView] = useState<View>("month");
   const [cursor, setCursor] = useState(() => new Date());
   const [selected, setSelected] = useState<Booking | null>(null);
+
+  useEffect(() => {
+    onMonthChange?.(cursor.getFullYear(), cursor.getMonth() + 1);
+  }, [cursor, onMonthChange]);
+
+
 
   const { data: allResources } = useResources({});
   const resources = useMemo(() => {

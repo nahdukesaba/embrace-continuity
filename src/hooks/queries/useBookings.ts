@@ -1,6 +1,6 @@
 import { useQuery, queryOptions } from "@tanstack/react-query";
 import { bookingsApi } from "@/services/api/bookings.api";
-import { publicApi } from "@/services/api/public.api";
+import { publicApi, type PublicBookingFilters } from "@/services/api/public.api";
 import { qk } from "@/lib/queryKeys";
 import type { BookingFilters } from "@/types";
 
@@ -13,7 +13,7 @@ export const myBookingsQueryOptions = (userId: string, filters: BookingFilters =
 export const bookingQueryOptions = (id: string) =>
   queryOptions({ queryKey: qk.bookings.detail(id), queryFn: () => bookingsApi.get(id) });
 
-export const publicBookingsQueryOptions = (filters: BookingFilters = {}) =>
+export const publicBookingsQueryOptions = (filters: PublicBookingFilters = {}) =>
   queryOptions({ queryKey: qk.public.bookings(filters), queryFn: () => publicApi.allBookings(filters) });
 
 export const bookingHistoryQueryOptions = (id: string) =>
@@ -22,5 +22,5 @@ export const bookingHistoryQueryOptions = (id: string) =>
 export const useBookings = (f: BookingFilters & { userId?: string } = {}) => useQuery(bookingsQueryOptions(f));
 export const useMyBookings = (userId: string, f: BookingFilters = {}) => useQuery(myBookingsQueryOptions(userId, f));
 export const useBooking = (id: string) => useQuery(bookingQueryOptions(id));
-export const usePublicBookings = (f: BookingFilters = {}) => useQuery(publicBookingsQueryOptions(f));
+export const usePublicBookings = (f: PublicBookingFilters = {}) => useQuery(publicBookingsQueryOptions(f));
 export const useBookingHistory = (id: string) => useQuery(bookingHistoryQueryOptions(id));
