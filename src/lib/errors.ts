@@ -44,3 +44,28 @@ export function toApiError(e: unknown): ApiError {
 export function isApiCode(e: unknown, code: string): e is ApiError {
   return e instanceof ApiError && e.code === code;
 }
+
+/**
+ * Maps documented backend error codes to friendly messages.
+ * Falls back to the server-provided message, then to a generic string.
+ */
+const FRIENDLY: Record<string, string> = {
+  VALIDATION_ERROR: "Some fields are invalid. Please review and try again.",
+  BOOKING_CONFLICT: "This time slot overlaps with another booking.",
+  PAST_BOOKING: "Bookings cannot be made or edited in the past.",
+  NOT_START_DAY: "This booking can only be started on its scheduled day.",
+  PHOTO_REQUIRED: "Please upload the required proof photo first.",
+  NOTIFY_NOT_ALLOWED: "Notifications are not allowed for this booking state.",
+  ACCOUNT_PENDING_APPROVAL: "Your account is awaiting admin approval.",
+  ACCOUNT_REJECTED: "Your account has been declined.",
+  RESOURCE_UNAVAILABLE: "This resource is currently unavailable.",
+  FORBIDDEN: "You do not have permission to perform this action.",
+  UNAUTHORIZED: "Please sign in again to continue.",
+  NOT_FOUND: "The requested item was not found.",
+};
+
+export function friendlyError(e: unknown, fallback = "Something went wrong"): string {
+  const err = toApiError(e);
+  if (err.code && FRIENDLY[err.code]) return FRIENDLY[err.code];
+  return err.message || fallback;
+}
