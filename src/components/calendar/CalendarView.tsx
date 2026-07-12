@@ -5,10 +5,12 @@ import {
 } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Booking } from "@/types";
+import type { Booking, Resource  } from "@/types";
 import { cn } from "@/lib/utils";
 import { colorForResource } from "@/lib/colors";
+import { useResources } from "@/hooks/queries/useResources";
 import { BookingDetailsDialog } from "./BookingDetailsDialog";
+
 
 type View = "month" | "week";
 
@@ -28,15 +30,15 @@ export function CalendarView({ bookings }: { bookings: Booking[] }) {
   const [cursor, setCursor] = useState(() => new Date());
   const [selected, setSelected] = useState<Booking | null>(null);
 
+  const { data: allResources } = useResources({});
   const resources = useMemo(() => {
-    const map = new Map<string, { id: string; name: string }>();
+    const map = new Map<string, Resource>();
+    (allResources ?? []).forEach((r) => map.set(r.id, r));
     bookings.forEach((b) => {
-      if (b.resource && !map.has(b.resource.id)) {
-        map.set(b.resource.id, { id: b.resource.id, name: b.resource.name });
-      }
+      if (b.resource && !map.has(b.resource.id)) map.set(b.resource.id, b.resource);
     });
     return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
-  }, [bookings]);
+  }, [allResources, bookings]);
 
   function shift(dir: -1 | 1) {
     if (view === "month") setCursor((c) => (dir > 0 ? addMonths(c, 1) : subMonths(c, 1)));
@@ -280,17 +282,17 @@ function WeekGrid({
   );
 }
 
-function Legend({ resources }: { resources: { id: string; name: string }[] }) {
+function Legend({ resources }: { resources: Resource[] }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-lg border border-border bg-card p-3 text-xs">
-      <div className="font-medium text-muted-foreground">Resources:</div>
-      {resources.length === 0 && <span className="text-muted-foreground">No bookings yet</span>}
-      {resources.map((r) => (
-        <div key={r.id} className="flex items-center gap-1.5">
-          <span className="inline-block size-3 rounded-sm" style={{ background: colorForResource(r.id) }} />
-          <span>{r.name}</span>
-        </div>
-      ))}
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-lg border border-border bg-card p-3 text-xs">
+        <div className="font-medium text-muted-foreground">Resources:</div>
+        {resources.length === 0 && <span className="text-muted-foreground">No resources yet</span>}
+        {resources.map((r) => (
+            <div key={r.id} className="flex items-center gap-1.5">
+              <span className="inline-block size-3 rounded-sm" style={{ background: colorForResource(r.id, r) }} />
+              <span>{r.name}</span>
+            </div>
+        ))}
       <div className="ml-auto flex items-center gap-4">
         <div className="flex items-center gap-1.5">
           <span className="inline-block h-3 w-5 rounded-sm border-2 border-foreground/60" />
