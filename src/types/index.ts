@@ -74,7 +74,7 @@ export interface Booking {
   resourceId: string;
   resource?: Resource;
   userId: string;
-  user?: AppUser;
+  user?: BookingUserRef;
   date: string; // YYYY-MM-DD (Asia/Jakarta)
   endDate?: string; // YYYY-MM-DD, inclusive; defaults to `date` (single-day)
   startTime: string; // HH:mm (Asia/Jakarta)

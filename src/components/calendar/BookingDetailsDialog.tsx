@@ -31,7 +31,7 @@ export function BookingDetailsDialog({
         <div className="space-y-2 text-sm">
           <div className="flex justify-between gap-3"><span className="text-muted-foreground">When</span><span className="text-right">{fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}{daysBetweenInclusive(booking.date, booking.endDate) > 1 && ` · ${daysBetweenInclusive(booking.date, booking.endDate)} days`}</span></div>
           <div className="flex justify-between"><span className="text-muted-foreground">Status</span><StatusBadge status={booking.status} /></div>
-          <div className="flex justify-between"><span className="text-muted-foreground">Booked by</span><span>{booking.user?.fullName}</span></div>
+          <div className="flex justify-between"><span className="text-muted-foreground">Booked by</span><span>{booking.user?.fullName ?? "—"}</span></div>
           {booking.resource?.type === "room" && (
             <div className="flex justify-between"><span className="text-muted-foreground">Location</span><span>{booking.resource.location}</span></div>
           )}
