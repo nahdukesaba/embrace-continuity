@@ -84,8 +84,9 @@ function AdminBookingReview() {
                         : t("adminBookingDetail.approved"),
                     );
                   } catch (e: unknown) {
-                    toast.error(e instanceof Error ? e.message : "Failed");
+                    toast.error(friendlyError(e));
                   }
+
                 }}
               >
                 {t("action.approve")}
