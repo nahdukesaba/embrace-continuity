@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { PublicLayout } from "@/layouts/PublicLayout";
@@ -32,6 +32,11 @@ function HomePage() {
   const { data, isLoading } = usePublicBookings({ year: ym.year, month: ym.month });
   const t = useT();
   const Layout = isAuthed ? MainLayout : PublicLayout;
+  const handleMonthChange = useCallback((year: number, month: number) => {
+    setYm((current) =>
+      current.year === year && current.month === month ? current : { year, month },
+    );
+  }, []);
 
   return (
     <Layout>
@@ -54,7 +59,7 @@ function HomePage() {
       ) : (
         <CalendarView
           bookings={data ?? []}
-          onMonthChange={(year, month) => setYm({ year, month })}
+          onMonthChange={handleMonthChange}
         />
       )}
     </Layout>

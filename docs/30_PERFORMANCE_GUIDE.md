@@ -82,6 +82,11 @@ Queries fetch.
 
 Keep responsibilities separate.
 
+When a child effect depends on a callback from its parent, pass a stable
+callback (for example, `useCallback`) and avoid setting equivalent state.
+This prevents render loops during interactive updates such as calendar
+selection or navigation.
+
 ---
 
 AI Rule
