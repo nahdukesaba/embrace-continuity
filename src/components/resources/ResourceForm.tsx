@@ -51,7 +51,7 @@ export function ResourceForm({
   const [uploading, setUploading] = useState(false);
 
   async function handlePhotoUpload(file: File) {
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
     if (!supabase) {
       toast.error("Storage not configured");
       return;

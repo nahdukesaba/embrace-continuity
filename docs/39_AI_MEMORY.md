@@ -76,3 +76,10 @@ and resource detail UI aligned with this response shape.
 `CalendarView` calls `onMonthChange` from an effect. Its parent must provide a
 stable callback and must not replace the current month state with an equivalent
 value, otherwise React enters a maximum-update-depth render loop.
+
+## Storage Upload Rule
+
+As of 2026-07-13, resource photos and booking proofs upload directly from the
+browser to Supabase Storage using the API-issued Supabase JWT. The proofs API
+accepts JSON metadata only: persist the object path (not a public URL) in
+`booking_proofs`, then resolve private proof paths to signed URLs for display.
