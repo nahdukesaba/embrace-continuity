@@ -45,7 +45,34 @@ export function ResourceForm({
   });
   const type = form.watch("type");
   const color = form.watch("color");
+  const photoUrl = form.watch("photoUrl");
   const t = useT();
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  async function handlePhotoUpload(file: File) {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      toast.error("Storage not configured");
+      return;
+    }
+    setUploading(true);
+    try {
+      const ext = (file.name.split(".").pop() ?? "jpg").toLowerCase();
+      const path = `resources/${crypto.randomUUID()}.${ext}`;
+      const { error } = await supabase.storage
+        .from(env.resourcesBucket)
+        .upload(path, file, { contentType: file.type || "image/jpeg", upsert: false });
+      if (error) throw new Error(error.message);
+      const { data } = supabase.storage.from(env.resourcesBucket).getPublicUrl(path);
+      form.setValue("photoUrl", data.publicUrl, { shouldDirty: true });
+      toast.success("Photo uploaded");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
