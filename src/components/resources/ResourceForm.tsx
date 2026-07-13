@@ -98,8 +98,43 @@ export function ResourceForm({
         <Textarea rows={3} {...form.register("description")} />
       </div>
       <div className="space-y-2">
-        <Label>Photo URL</Label>
-        <Input {...form.register("photoUrl")} placeholder="https://..." />
+        <Label>Photo</Label>
+        <div className="flex items-start gap-3">
+          {photoUrl ? (
+            <img
+              src={photoUrl}
+              alt=""
+              className="size-20 shrink-0 rounded-md border border-border object-cover"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+            />
+          ) : (
+            <div className="size-20 shrink-0 rounded-md border border-dashed border-border" />
+          )}
+          <div className="flex-1 space-y-2">
+            <Input {...form.register("photoUrl")} placeholder="https://... or upload a file" />
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void handlePhotoUpload(f);
+                e.target.value = "";
+              }}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={uploading}
+              onClick={() => fileRef.current?.click()}
+            >
+              {uploading ? <Loader2 className="mr-1 size-4 animate-spin" /> : <Upload className="mr-1 size-4" />}
+              {uploading ? "Uploading..." : "Upload photo"}
+            </Button>
+          </div>
+        </div>
       </div>
       {type === "room" ? (
         <div className="grid gap-4 sm:grid-cols-2">
