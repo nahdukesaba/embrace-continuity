@@ -57,6 +57,7 @@ function AdminResources() {
                             <TableRow>
                                 <TableHead>{t("adminResources.name")}</TableHead>
                                 <TableHead>{t("adminResources.type")}</TableHead>
+                                <TableHead>{t("adminResources.info")}</TableHead>
                                 <TableHead>{t("adminResources.status")}</TableHead>
                                 <TableHead className="text-right">{t("adminResources.actions")}</TableHead>
                             </TableRow>
@@ -71,6 +72,9 @@ function AdminResources() {
                     </span>
                                     </TableCell>
                                     <TableCell className="capitalize">{t(`resource.type.${r.type}`)}</TableCell>
+                                    <TableCell className="text-muted-foreground">
+                                        {r.type === "room" ? (r.location ?? "—") : ((r.type === "car" || r.type === "bike") ? (r.licensePlate ?? "—") : "—")}
+                                    </TableCell>
                                     <TableCell>{r.isAvailable ? t("resource.available") : t("resource.unavailable")}</TableCell>
                                     <TableCell className="text-right space-x-1">
                                         <Button size="icon" variant="ghost" onClick={() => setEditing(r)}><Pencil className="size-4" /></Button>
