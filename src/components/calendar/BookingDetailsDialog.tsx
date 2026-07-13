@@ -18,7 +18,7 @@ export function BookingDetailsDialog({
 }) {
   const { isAuthed } = useAuth();
   if (!booking) return null;
-  const color = colorForResource(booking.resourceId);
+  const color = colorForResource(booking.resourceId, booking.resource);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
