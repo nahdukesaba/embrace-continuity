@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { BOOKING_MAX_DURATION_MIN } from "@/config/constants";
 import { diffMinutes } from "@/lib/format";
 
 export const bookingSchema = z
@@ -13,8 +12,5 @@ export const bookingSchema = z
   })
   .refine((v) => diffMinutes(v.startTime, v.endTime) > 0, {
     message: "End must be after start", path: ["endTime"],
-  })
-  .refine((v) => diffMinutes(v.startTime, v.endTime) <= BOOKING_MAX_DURATION_MIN, {
-    message: `Max ${BOOKING_MAX_DURATION_MIN / 60}h`, path: ["endTime"],
   });
 export type BookingValues = z.infer<typeof bookingSchema>;

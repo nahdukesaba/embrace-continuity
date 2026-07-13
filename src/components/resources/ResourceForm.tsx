@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resourceSchema, type ResourceValues } from "@/schemas/resource";
@@ -11,6 +12,10 @@ import type { Resource } from "@/types";
 import { useT } from "@/i18n/LanguageProvider";
 import { RESOURCE_PALETTE } from "@/lib/colors";
 import { cn } from "@/lib/utils";
+import { getSupabaseClient } from "@/integrations/supabase/client";
+import { env } from "@/lib/env";
+import { toast } from "sonner";
+import { Upload, Loader2 } from "lucide-react";
 
 export function ResourceForm({
   defaultValues,
@@ -40,7 +45,34 @@ export function ResourceForm({
   });
   const type = form.watch("type");
   const color = form.watch("color");
+  const photoUrl = form.watch("photoUrl");
   const t = useT();
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  async function handlePhotoUpload(file: File) {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      toast.error("Storage not configured");
+      return;
+    }
+    setUploading(true);
+    try {
+      const ext = (file.name.split(".").pop() ?? "jpg").toLowerCase();
+      const path = `resources/${crypto.randomUUID()}.${ext}`;
+      const { error } = await supabase.storage
+        .from(env.resourcesBucket)
+        .upload(path, file, { contentType: file.type || "image/jpeg", upsert: false });
+      if (error) throw new Error(error.message);
+      const { data } = supabase.storage.from(env.resourcesBucket).getPublicUrl(path);
+      form.setValue("photoUrl", data.publicUrl, { shouldDirty: true });
+      toast.success("Photo uploaded");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -66,8 +98,43 @@ export function ResourceForm({
         <Textarea rows={3} {...form.register("description")} />
       </div>
       <div className="space-y-2">
-        <Label>Photo URL</Label>
-        <Input {...form.register("photoUrl")} placeholder="https://..." />
+        <Label>Photo</Label>
+        <div className="flex items-start gap-3">
+          {photoUrl ? (
+            <img
+              src={photoUrl}
+              alt=""
+              className="size-20 shrink-0 rounded-md border border-border object-cover"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+            />
+          ) : (
+            <div className="size-20 shrink-0 rounded-md border border-dashed border-border" />
+          )}
+          <div className="flex-1 space-y-2">
+            <Input {...form.register("photoUrl")} placeholder="https://... or upload a file" />
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void handlePhotoUpload(f);
+                e.target.value = "";
+              }}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={uploading}
+              onClick={() => fileRef.current?.click()}
+            >
+              {uploading ? <Loader2 className="mr-1 size-4 animate-spin" /> : <Upload className="mr-1 size-4" />}
+              {uploading ? "Uploading..." : "Upload photo"}
+            </Button>
+          </div>
+        </div>
       </div>
       {type === "room" ? (
         <div className="grid gap-4 sm:grid-cols-2">

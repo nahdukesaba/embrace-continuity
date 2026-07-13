@@ -15,9 +15,10 @@ export function BrandMark({ size = "sm" }: { size?: "sm" | "lg" }) {
     <span className="flex items-center gap-2">
       <span
         className={cn(
-          "flex shrink-0 items-center justify-center rounded-md bg-primary font-display font-bold text-primary-foreground",
+          "flex shrink-0 items-center justify-center rounded-md bg-primary font-display font-bold text-primary-foreground border-2",
           badge,
         )}
+        style={{ borderColor: "#D5C5BA" }}
       >
         SA
       </span>
