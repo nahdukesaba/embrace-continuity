@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resourceSchema, type ResourceValues } from "@/schemas/resource";
@@ -11,6 +12,10 @@ import type { Resource } from "@/types";
 import { useT } from "@/i18n/LanguageProvider";
 import { RESOURCE_PALETTE } from "@/lib/colors";
 import { cn } from "@/lib/utils";
+import { getSupabaseClient } from "@/integrations/supabase/client";
+import { env } from "@/lib/env";
+import { toast } from "sonner";
+import { Upload, Loader2 } from "lucide-react";
 
 export function ResourceForm({
   defaultValues,
