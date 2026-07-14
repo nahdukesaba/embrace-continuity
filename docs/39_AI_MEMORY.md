@@ -83,3 +83,11 @@ As of 2026-07-13, resource photos and booking proofs upload directly from the
 browser to Supabase Storage using the API-issued Supabase JWT. The proofs API
 accepts JSON metadata only: persist the object path (not a public URL) in
 `booking_proofs`, then resolve private proof paths to signed URLs for display.
+
+## Public Configuration Rule
+
+As of 2026-07-14, API and Supabase browser configuration lives in Vite
+`VITE_*` environment variables. Use `.env` locally, and configure the same
+variables in Lovable and Vercel; never restore deployment-specific defaults to
+`src/lib/env.ts`. Keep `env.ts` as the shared typed adapter rather than
+duplicating `import.meta.env` access across clients and components.

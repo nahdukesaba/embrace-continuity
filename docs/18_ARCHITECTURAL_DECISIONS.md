@@ -116,3 +116,19 @@ Breaking changes require a new API version.
 Status
 
 Accepted.
+
+---
+
+## ADR-009
+
+Public deployment configuration is environment-driven.
+
+Reason
+
+API and Supabase connection values must be changed per local, Lovable, and
+Vercel environment without source edits. The `env.ts` module remains the
+single client-side adapter so existing consumers keep one consistent API.
+
+Status
+
+Accepted.

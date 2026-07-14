@@ -16,6 +16,12 @@ dist-ssr
 .nitro
 *.local
 
+# Local environment configuration (Vercel and Lovable values are managed in
+# their respective project settings).
+.env
+.env.*
+!.env.example
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

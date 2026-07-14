@@ -101,6 +101,26 @@ React Component
 
 Never bypass this pipeline.
 
+## Public Runtime Configuration
+
+Browser-visible integration values are supplied by Vite environment variables,
+not hard-coded in the application. Local development reads the ignored `.env`
+file; copy `.env.example` when creating a new local setup. Vercel and Lovable
+must define the same `VITE_*` values in their project environment settings for
+the relevant environment (Development, Preview, and Production).
+
+Required public variables:
+
+- `VITE_API_BASE_URL`
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+- `VITE_SUPABASE_PROOFS_BUCKET`
+- `VITE_SUPABASE_RESOURCES_BUCKET`
+
+`VITE_PROOF_CAMERA_ONLY` is optional and defaults to `true`. These variables
+are bundled into the browser, so private credentials must stay server-only and
+be read through `src/lib/config.server.ts`.
+
 ---
 
 ## API Ownership
