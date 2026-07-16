@@ -1,5 +1,5 @@
 import { http } from "@/services/http";
-import type { AppUser, AuthSession, LoginInput, RegisterInput } from "@/types";
+import type { AppUser, AuthSession, ChangePasswordInput, LoginInput, RegisterInput } from "@/types";
 
 /** Auth is always live against the backend (per Chunk 2 plan). */
 export const authApi = {
@@ -15,5 +15,11 @@ export const authApi = {
   async me(_token: string | null): Promise<AppUser | null> {
     const { data } = await http.get<AppUser>("/auth/me");
     return data;
+  },
+  async changePassword(input: ChangePasswordInput): Promise<void> {
+    await http.put("/auth/password", input);
+  },
+  async resetPassword(userId: string): Promise<void> {
+    await http.put("/auth/reset", { userId });
   },
 };

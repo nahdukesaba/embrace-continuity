@@ -91,3 +91,11 @@ As of 2026-07-14, API and Supabase browser configuration lives in Vite
 variables in Lovable and Vercel; never restore deployment-specific defaults to
 `src/lib/env.ts`. Keep `env.ts` as the shared typed adapter rather than
 duplicating `import.meta.env` access across clients and components.
+
+## Password Management Rule
+
+As of 2026-07-16, password changes and administrator resets are represented by
+`authApi` methods and always use the shared HTTP client so bearer-token handling
+stays centralized. The current API payloads are `{ oldPassword, newPassword }`
+for `PUT /auth/password` and `{ userId }` for `PUT /auth/reset`; keep these
+contracts aligned with the backend when the endpoints are deployed.

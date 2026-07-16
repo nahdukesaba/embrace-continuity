@@ -108,6 +108,20 @@ The API client should own authorization headers.
 
 ---
 
+## Password Management
+
+Authenticated users can change their password from the account menu. The
+frontend validates the current password, new password, and confirmation before
+calling `PUT /auth/password` with `{ oldPassword, newPassword }` through the
+shared API client.
+
+Administrators can reset an approved user's password from Manage Users after a
+confirmation. This calls `PUT /auth/reset` with `{ userId }`. Both requests use
+the API client's centralized bearer-token interceptor; the backend remains
+responsible for authorization and password policy.
+
+---
+
 ## Future Expansion
 
 Support for

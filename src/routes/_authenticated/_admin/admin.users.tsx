@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useUsers } from "@/hooks/queries/useUsers";
-import { useApproveUser, useRejectUser } from "@/hooks/mutations/useUserMutations";
+import { useApproveUser, useRejectUser, useResetUserPassword } from "@/hooks/mutations/useUserMutations";
 import { useT } from "@/i18n/LanguageProvider";
 
 import type { AppUser, UserStatus } from "@/types";
@@ -53,7 +53,8 @@ function UsersTable({ status }: { status: UserStatus }) {
   const { data, isLoading, error } = useUsers(status);
   const approve = useApproveUser();
   const reject = useRejectUser();
-  const [confirm, setConfirm] = useState<{ action: "approve" | "reject"; user: AppUser } | null>(null);
+  const resetPassword = useResetUserPassword();
+  const [confirm, setConfirm] = useState<{ action: "approve" | "reject" | "reset"; user: AppUser } | null>(null);
 
   if (isLoading) return <LoadingSkeleton />;
   if (error) return <p className="text-sm text-destructive">{(error as Error).message}</p>;
@@ -68,9 +69,12 @@ function UsersTable({ status }: { status: UserStatus }) {
       if (confirm.action === "approve") {
         await approve.mutateAsync(confirm.user.id);
         toast.success(t("adminUsers.approved"));
-      } else {
+      } else if (confirm.action === "reject") {
         await reject.mutateAsync(confirm.user.id);
         toast.success(t("adminUsers.rejected"));
+      } else {
+        await resetPassword.mutateAsync(confirm.user.id);
+        toast.success(t("adminUsers.passwordReset"));
       }
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed");
@@ -107,7 +111,11 @@ function UsersTable({ status }: { status: UserStatus }) {
                       {t("action.approve")}
                     </Button>
                   )}
-                  {status !== "rejected" && (
+                  {status === "approved" ? (
+                    <Button size="sm" variant="outline" onClick={() => setConfirm({ action: "reset", user: u })}>
+                      {t("adminUsers.resetPassword")}
+                    </Button>
+                  ) : status !== "rejected" && (
                     <Button size="sm" variant="outline" onClick={() => setConfirm({ action: "reject", user: u })}>
                       {t("action.reject")}
                     </Button>
@@ -124,10 +132,18 @@ function UsersTable({ status }: { status: UserStatus }) {
         title={
           confirm?.action === "approve"
             ? t("adminUsers.approveQ")
-            : t("adminUsers.rejectQ")
+            : confirm?.action === "reject"
+              ? t("adminUsers.rejectQ")
+              : t("adminUsers.resetPasswordQ")
         }
         description={confirm ? `${confirm.user.fullName} · ${confirm.user.email}` : undefined}
-        confirmLabel={confirm?.action === "approve" ? t("action.approve") : t("action.reject")}
+        confirmLabel={
+          confirm?.action === "approve"
+            ? t("action.approve")
+            : confirm?.action === "reject"
+              ? t("action.reject")
+              : t("adminUsers.resetPassword")
+        }
         onConfirm={run}
       />
     </>

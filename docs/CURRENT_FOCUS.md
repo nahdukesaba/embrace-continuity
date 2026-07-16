@@ -47,6 +47,7 @@ Current work is concentrated around:
 - API integration
 - Environment-based deployment configuration
 - Documentation
+- Account password management and approved-user password resets
 
 ---
 
@@ -144,7 +145,7 @@ The repository remains the ultimate source of truth.
 
 # Last Updated
 
-2026-07-14
+2026-07-16
 
 Owner
 

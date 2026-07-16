@@ -51,7 +51,7 @@ function MyBookingsPage() {
               <DialogTrigger asChild>
                 <Button size="sm"><Plus className="mr-1 size-4" />{t("myBookings.add")}</Button>
               </DialogTrigger>
-              <DialogContent className="max-w-md">
+              <DialogContent className="max-h-[calc(100dvh-2rem)] max-w-md overflow-y-auto">
                 <DialogHeader><DialogTitle>{t("myBookings.new")}</DialogTitle></DialogHeader>
                 <BookingForm onCreated={() => setAddOpen(false)} />
               </DialogContent>

@@ -143,3 +143,12 @@ token format
 retry policy
 
 These belong inside the API layer.
+
+---
+
+## Password Endpoints
+
+Authentication mutations belong to `authApi`, including `PUT /auth/password`
+for the signed-in user and `PUT /auth/reset` for an administrator resetting a
+selected user. User-management UI accesses the reset operation through its
+existing mutation hook; neither UI surface constructs authorization headers.

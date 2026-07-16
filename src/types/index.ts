@@ -130,6 +130,11 @@ export interface RegisterInput {
   phone?: string;
 }
 
+export interface ChangePasswordInput {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface CreateBookingInput {
   resourceId: string;
   date: string;

@@ -63,6 +63,14 @@ const en: Dict = {
 
   "auth.emailLabel": "Email",
   "auth.passwordLabel": "Password",
+  "auth.changePassword": "Change password",
+  "auth.changePasswordDesc": "Use your current password to set a new one.",
+  "auth.oldPassword": "Current password",
+  "auth.newPassword": "New password",
+  "auth.confirmNewPassword": "Confirm new password",
+  "auth.updatingPassword": "Updating password...",
+  "auth.passwordUpdated": "Password updated",
+  "auth.passwordUpdateFailed": "Failed to update password",
   "auth.fullNameLabel": "Full name",
   "auth.signInTitle": "Sign in",
   "auth.signInSubtitle": "Use your email and password to login. Contact your admin for mor information.",
@@ -230,6 +238,9 @@ const en: Dict = {
   "adminUsers.rejected": "User rejected",
   "adminUsers.approveQ": "Approve this user?",
   "adminUsers.rejectQ": "Reject this user?",
+  "adminUsers.resetPassword": "Reset password",
+  "adminUsers.resetPasswordQ": "Reset this user's password?",
+  "adminUsers.passwordReset": "Password reset",
 };
 
 const id: Dict = {
@@ -287,6 +298,14 @@ const id: Dict = {
 
   "auth.emailLabel": "Email",
   "auth.passwordLabel": "Kata sandi",
+  "auth.changePassword": "Ubah kata sandi",
+  "auth.changePasswordDesc": "Gunakan kata sandi saat ini untuk membuat kata sandi baru.",
+  "auth.oldPassword": "Kata sandi saat ini",
+  "auth.newPassword": "Kata sandi baru",
+  "auth.confirmNewPassword": "Konfirmasi kata sandi baru",
+  "auth.updatingPassword": "Memperbarui kata sandi...",
+  "auth.passwordUpdated": "Kata sandi diperbarui",
+  "auth.passwordUpdateFailed": "Gagal memperbarui kata sandi",
   "auth.fullNameLabel": "Nama lengkap",
   "auth.signInTitle": "Masuk",
   "auth.signInSubtitle": "Gunakan email dan password anda untuk masuk. Hubungi admin anda untuk keterangan lebih lanjut.",
@@ -454,6 +473,9 @@ const id: Dict = {
   "adminUsers.rejected": "Pengguna ditolak",
   "adminUsers.approveQ": "Setujui pengguna ini?",
   "adminUsers.rejectQ": "Tolak pengguna ini?",
+  "adminUsers.resetPassword": "Atur ulang kata sandi",
+  "adminUsers.resetPasswordQ": "Atur ulang kata sandi pengguna ini?",
+  "adminUsers.passwordReset": "Kata sandi diatur ulang",
 };
 
 export const dictionaries: Record<Language, Dict> = { en, id };

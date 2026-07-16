@@ -18,3 +18,16 @@ export const registerSchema = z.object({
     .or(z.literal("").transform(() => undefined)),
 });
 export type RegisterValues = z.infer<typeof registerSchema>;
+
+export const changePasswordSchema = z
+  .object({
+    oldPassword: z.string().min(6, "Min 6 characters"),
+    newPassword: z.string().min(6, "Min 6 characters"),
+    confirmPassword: z.string().min(1, "Confirm your new password"),
+  })
+  .refine((values) => values.newPassword === values.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type ChangePasswordValues = z.infer<typeof changePasswordSchema>;
