@@ -29,14 +29,38 @@ export function BookingDetailsDialog({
           </DialogTitle>
         </DialogHeader>
         <div className="space-y-2 text-sm">
-          <div className="flex justify-between gap-3"><span className="text-muted-foreground">When</span><span className="text-right">{fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}{daysBetweenInclusive(booking.date, booking.endDate) > 1 && ` · ${daysBetweenInclusive(booking.date, booking.endDate)} days`}</span></div>
-          <div className="flex justify-between"><span className="text-muted-foreground">Status</span><StatusBadge status={booking.status} /></div>
-          <div className="flex justify-between"><span className="text-muted-foreground">Booked by</span><span>{booking.user?.fullName ?? "—"}</span></div>
+          <div className="flex justify-between gap-3">
+            <span className="text-muted-foreground">When</span>
+            <span className="text-right">
+              {fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}
+              {daysBetweenInclusive(booking.date, booking.endDate) > 1 &&
+                ` · ${daysBetweenInclusive(booking.date, booking.endDate)} days`}
+            </span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Status</span>
+            <StatusBadge status={booking.status} />
+          </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Booked by</span>
+            <span>{booking.user?.fullName ?? "—"}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Purpose</span>
+            <span>{booking.purpose ?? "—"}</span>
+          </div>
+
           {booking.resource?.type === "room" && (
-            <div className="flex justify-between"><span className="text-muted-foreground">Location</span><span>{booking.resource.location}</span></div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Location</span>
+              <span>{booking.resource.location}</span>
+            </div>
           )}
           {(booking.resource?.type === "car" || booking.resource?.type === "bike") && (
-            <div className="flex justify-between"><span className="text-muted-foreground">Plate</span><span>{booking.resource.licensePlate}</span></div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Plate</span>
+              <span>{booking.resource.licensePlate}</span>
+            </div>
           )}
           {booking.adminNotes && (
             <div className="rounded-md border border-border bg-muted/40 p-2 text-xs text-muted-foreground">
@@ -47,7 +71,9 @@ export function BookingDetailsDialog({
         <DialogFooter>
           {isAuthed ? (
             <Button asChild>
-              <Link to="/resources/$id" params={{ id: booking.resourceId }}>View resource</Link>
+              <Link to="/resources/$id" params={{ id: booking.resourceId }}>
+                View resource
+              </Link>
             </Button>
           ) : (
             <Button asChild>
