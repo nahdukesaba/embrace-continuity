@@ -152,6 +152,10 @@ export const bookingsApi = {
     const { data } = await http.post<NotifyResult>(`/bookings/${id}/notify`, { message });
     return data;
   },
+  async requestRevision(id: string, adminNotes?: string): Promise<Booking> {
+    const { data } = await http.put<ApiBookingRaw>(`/bookings/${id}/request-revision`, { adminNotes });
+    return normalizeBooking(data);
+  },
   async history(id: string): Promise<TimelineEntry[]> {
     const { data } = await http.get<TimelineEntry[] | { data: TimelineEntry[] }>(
       `/bookings/${id}/history`,

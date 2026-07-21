@@ -42,8 +42,9 @@ function MyBookingsPage() {
                 <SelectItem value="approved">{t("status.approved")}</SelectItem>
                 <SelectItem value="in_use">{t("status.in_use")}</SelectItem>
                 <SelectItem value="finished">{t("status.finished")}</SelectItem>
+                <SelectItem value="needs_revision">{t("status.needsRevision")}</SelectItem>
+                <SelectItem value="closed">{t("status.closed")}</SelectItem>
                 <SelectItem value="rejected">{t("status.rejected")}</SelectItem>
-                <SelectItem value="completed">{t("status.completed")}</SelectItem>
                 <SelectItem value="cancelled">{t("status.cancelled")}</SelectItem>
               </SelectContent>
             </Select>

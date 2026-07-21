@@ -43,10 +43,10 @@ function BookingDetail() {
   const inWindow = isTodayInRange(booking.date, booking.endDate);
   const canCancel = booking.status === "pending" || booking.status === "approved";
   const canStart = booking.status === "approved" && inWindow;
-  const canFinish = booking.status === "in_use";
+  const canFinish = booking.status === "in_use" || booking.status === "needs_revision";
   // Proofs only allowed once approved AND today is within booking window
   const showBeforeUploader = booking.status === "approved" && inWindow;
-  const showAfterUploader = booking.status === "in_use" && inWindow;
+  const showAfterUploader = (booking.status === "in_use" || booking.status === "needs_revision") && inWindow;
   const days = daysBetweenInclusive(booking.date, booking.endDate);
 
   return (
@@ -81,7 +81,7 @@ function BookingDetail() {
             {t("booking.start")}
           </Button>
         )}
-        {booking.status === "in_use" && (
+        {(booking.status === "in_use" || booking.status === "needs_revision") && (
           <Button
             disabled={!canFinish || !hasAfter}
             title={!hasAfter ? t("bookingDetail.finishTitleNeedAfter") : undefined}
@@ -103,6 +103,16 @@ function BookingDetail() {
           >
             {t("booking.cancel")}
           </Button>
+        )}
+        {booking.status === "needs_revision" && (
+          <div className="pt-2 text-sm text-warning">
+            {t("bookingDetail.needsRevisionNotice")}
+          </div>
+        )}
+        {booking.status === "closed" && (
+          <div className="pt-2 text-sm text-muted-foreground">
+            {t("bookingDetail.closedStatus")}
+          </div>
         )}
       </div>
 

@@ -83,3 +83,11 @@ export const useNotifyBooking = () => {
     onSuccess: (_r, vars) => invalidateAll(qc, vars.id),
   });
 };
+
+export const useRequestRevisionBooking = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, notes }: { id: string; notes?: string }) => bookingsApi.requestRevision(id, notes),
+    onSuccess: (b) => invalidateAll(qc, b.id),
+  });
+};

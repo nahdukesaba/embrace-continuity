@@ -5,6 +5,8 @@ export type BookingStatus =
   | "approved"
   | "in_use"
   | "finished"
+  | "needs_revision"
+  | "closed"
   | "rejected"
   | "completed"
   | "cancelled";

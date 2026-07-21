@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useBooking } from "@/hooks/queries/useBookings";
 import { useProofs } from "@/hooks/queries/useProofs";
-import { useApproveBooking, useCloseBooking, useRejectBooking, useRevokeBooking } from "@/hooks/mutations/useBookingMutations";
+import { useApproveBooking, useCloseBooking, useRejectBooking, useRevokeBooking, useRequestRevisionBooking } from "@/hooks/mutations/useBookingMutations";
 import { useT } from "@/i18n/LanguageProvider";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
@@ -32,6 +32,7 @@ function AdminBookingReview() {
   const reject = useRejectBooking();
   const close = useCloseBooking();
   const revoke = useRevokeBooking();
+  const requestRevision = useRequestRevisionBooking();
   const t = useT();
   const [notes, setNotes] = useState("");
 
@@ -92,7 +93,14 @@ function AdminBookingReview() {
                 {t("action.approve")}
               </Button>
               <Button variant="destructive" disabled={booking.status !== "pending"} onClick={() => act(() => reject.mutateAsync({ id: booking.id, notes }), t("adminBookingDetail.rejected"))}>{t("action.reject")}</Button>
-              <Button variant="outline" disabled={booking.status !== "finished"} onClick={() => act(() => close.mutateAsync({ id: booking.id, notes }), t("adminBookingDetail.closed"))}>{t("action.markCompleted")}</Button>
+              <Button variant="outline" disabled={booking.status !== "finished"} onClick={() => act(() => close.mutateAsync({ id: booking.id, notes }), t("adminBookingDetail.closed"))}>{t("action.closeBooking")}</Button>
+              <Button
+                variant="outline"
+                disabled={booking.status !== "finished"}
+                onClick={() => act(() => requestRevision.mutateAsync({ id: booking.id, notes }), t("adminBookingDetail.requestRevision"))}
+              >
+                {t("action.requestRevision")}
+              </Button>
               <Button
                 variant="destructive"
                 disabled={!canRevoke || revoke.isPending}
