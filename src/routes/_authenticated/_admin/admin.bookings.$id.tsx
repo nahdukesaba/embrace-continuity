@@ -156,7 +156,7 @@ function AdminBookingReview() {
               </Button>
               <Button
                 variant="outline"
-                disabled={!["finished", "needs_revision"].includes(booking.status)}
+                disabled={!["finished", "in_use"].includes(booking.status)}
                 onClick={() =>
                   act(
                     () => requestRevision.mutateAsync({ id: booking.id, notes }),
