@@ -11,6 +11,8 @@ export const STATUS_COLOR: Record<BookingStatus, string> = {
   rejected: "bg-destructive/15 text-destructive border-destructive/30",
   completed: "bg-chart-4/15 text-chart-4 border-chart-4/30",
   cancelled: "bg-muted text-muted-foreground border-border",
+  needs_revision: "bg-chart-1/15 text-chart-1 border-chart-1/30",
+  closed: "bg-chart-4/15 text-chart-4 border-chart-4/30",
 };
 
 export const STATUS_LABEL: Record<BookingStatus, string> = {
@@ -21,4 +23,6 @@ export const STATUS_LABEL: Record<BookingStatus, string> = {
   rejected: "Rejected",
   completed: "Completed",
   cancelled: "Cancelled",
+  needs_revision: "Needs Revision",
+  closed: "Closed",
 };

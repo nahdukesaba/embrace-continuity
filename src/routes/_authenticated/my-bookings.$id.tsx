@@ -46,25 +46,43 @@ function BookingDetail() {
   const canFinish = booking.status === "in_use" || booking.status === "needs_revision";
   // Proofs only allowed once approved AND today is within booking window
   const showBeforeUploader = booking.status === "approved" && inWindow;
-  const showAfterUploader = (booking.status === "in_use" || booking.status === "needs_revision") && inWindow;
+  const showAfterUploader =
+    (booking.status === "in_use" || booking.status === "needs_revision") && inWindow;
   const days = daysBetweenInclusive(booking.date, booking.endDate);
 
   return (
     <div className="space-y-6">
       <Button asChild variant="ghost" size="sm" className="w-fit">
-        <Link to="/my-bookings"><ArrowLeft className="mr-1 size-4" />{t("action.back")}</Link>
+        <Link to="/my-bookings">
+          <ArrowLeft className="mr-1 size-4" />
+          {t("action.back")}
+        </Link>
       </Button>
-        <PageHeader
-            title={booking.resource?.name ?? "Booking"}
-            titlePrefix={<ResourceColorDot resourceId={booking.resourceId} resource={booking.resource} />}
-            description={`${fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}${days > 1 ? ` · ${days} ${t("bookingDetail.daysSuffix")}` : ""}`}
-            actions={<StatusBadge status={booking.status} />}
-        />
+      <PageHeader
+        title={booking.resource?.name ?? "Booking"}
+        titlePrefix={
+          <ResourceColorDot resourceId={booking.resourceId} resource={booking.resource} />
+        }
+        description={`${fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}${days > 1 ? ` · ${days} ${t("bookingDetail.daysSuffix")}` : ""}`}
+        actions={<StatusBadge status={booking.status} />}
+      />
       <Card>
         <CardContent className="space-y-2 p-4 text-sm">
-          <p><span className="text-muted-foreground">{t("bookingDetail.requested")}:</span> {fmtDateTime(booking.createdAt)}</p>
-          {booking.purpose && <p><span className="text-muted-foreground">Purpose:</span> {booking.purpose}</p>}
-          {booking.adminNotes && <p><span className="text-muted-foreground">{t("bookingDetail.adminNotes")}:</span> {booking.adminNotes}</p>}
+          <p>
+            <span className="text-muted-foreground">{t("bookingDetail.requested")}:</span>{" "}
+            {fmtDateTime(booking.createdAt)}
+          </p>
+          {booking.purpose && (
+            <p>
+              <span className="text-muted-foreground">Purpose:</span> {booking.purpose}
+            </p>
+          )}
+          {booking.adminNotes && (
+            <p>
+              <span className="text-muted-foreground">{t("bookingDetail.adminNotes")}:</span>{" "}
+              {booking.adminNotes}
+            </p>
+          )}
         </CardContent>
       </Card>
 
@@ -72,10 +90,20 @@ function BookingDetail() {
         {booking.status === "approved" && (
           <Button
             disabled={!canStart || !hasBefore}
-            title={!inWindow ? t("bookingDetail.startTitleWindow") : !hasBefore ? t("bookingDetail.startTitleNeedBefore") : undefined}
+            title={
+              !inWindow
+                ? t("bookingDetail.startTitleWindow")
+                : !hasBefore
+                  ? t("bookingDetail.startTitleNeedBefore")
+                  : undefined
+            }
             onClick={async () => {
-              try { await start.mutateAsync(booking.id); toast.success(t("bookingDetail.usageStarted")); }
-              catch (e: unknown) { toast.error(e instanceof Error ? e.message : t("bookingDetail.failed")); }
+              try {
+                await start.mutateAsync(booking.id);
+                toast.success(t("bookingDetail.usageStarted"));
+              } catch (e: unknown) {
+                toast.error(e instanceof Error ? e.message : t("bookingDetail.failed"));
+              }
             }}
           >
             {t("booking.start")}
@@ -86,8 +114,12 @@ function BookingDetail() {
             disabled={!canFinish || !hasAfter}
             title={!hasAfter ? t("bookingDetail.finishTitleNeedAfter") : undefined}
             onClick={async () => {
-              try { await finish.mutateAsync(booking.id); toast.success(t("bookingDetail.usageFinished")); }
-              catch (e: unknown) { toast.error(e instanceof Error ? e.message : t("bookingDetail.failed")); }
+              try {
+                await finish.mutateAsync(booking.id);
+                toast.success(t("bookingDetail.usageFinished"));
+              } catch (e: unknown) {
+                toast.error(e instanceof Error ? e.message : t("bookingDetail.failed"));
+              }
             }}
           >
             {t("booking.finish")}
@@ -97,22 +129,22 @@ function BookingDetail() {
           <Button
             variant="outline"
             onClick={async () => {
-              try { await cancel.mutateAsync(booking.id); toast.success(t("bookingDetail.cancelled")); }
-              catch (e: unknown) { toast.error(e instanceof Error ? e.message : t("bookingDetail.failed")); }
+              try {
+                await cancel.mutateAsync(booking.id);
+                toast.success(t("bookingDetail.cancelled"));
+              } catch (e: unknown) {
+                toast.error(e instanceof Error ? e.message : t("bookingDetail.failed"));
+              }
             }}
           >
             {t("booking.cancel")}
           </Button>
         )}
         {booking.status === "needs_revision" && (
-          <div className="pt-2 text-sm text-warning">
-            {t("bookingDetail.needsRevisionNotice")}
-          </div>
+          <div className="pt-2 text-sm text-warning">{t("bookingDetail.needsRevisionNotice")}</div>
         )}
         {booking.status === "closed" && (
-          <div className="pt-2 text-sm text-muted-foreground">
-            {t("bookingDetail.closedStatus")}
-          </div>
+          <div className="pt-2 text-sm text-muted-foreground">{t("bookingDetail.closed")}</div>
         )}
       </div>
 
