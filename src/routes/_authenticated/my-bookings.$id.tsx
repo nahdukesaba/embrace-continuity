@@ -44,10 +44,11 @@ function BookingDetail() {
   const canCancel = booking.status === "pending" || booking.status === "approved";
   const canStart = booking.status === "approved" && inWindow;
   const canFinish = booking.status === "in_use" || booking.status === "needs_revision";
+  const needRevision = booking.status === "needs_revision";
   // Proofs only allowed once approved AND today is within booking window
   const showBeforeUploader = booking.status === "approved" && inWindow;
   const showAfterUploader =
-    (booking.status === "in_use" || booking.status === "needs_revision") && inWindow;
+    (booking.status === "in_use" && inWindow) || booking.status === "needs_revision";
   const days = daysBetweenInclusive(booking.date, booking.endDate);
 
   return (
@@ -112,7 +113,13 @@ function BookingDetail() {
         {(booking.status === "in_use" || booking.status === "needs_revision") && (
           <Button
             disabled={!canFinish || !hasAfter}
-            title={!hasAfter ? t("bookingDetail.finishTitleNeedAfter") : undefined}
+            title={
+              !hasAfter
+                ? t("bookingDetail.finishTitleNeedAfter")
+                : needRevision
+                  ? t("bookingDetail.finishTitleNeedAfter")
+                  : undefined
+            }
             onClick={async () => {
               try {
                 await finish.mutateAsync(booking.id);
