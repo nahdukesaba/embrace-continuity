@@ -165,7 +165,7 @@ function AdminBookingReview() {
                   )
                 }
               >
-                {t("admin.notify")}
+                {t("action.requestRevision")}
               </Button>
               <Button
                 variant="outline"
