@@ -62,7 +62,16 @@ function BookingDetail() {
         titlePrefix={
           <ResourceColorDot resourceId={booking.resourceId} resource={booking.resource} />
         }
-        description={`${fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}${days > 1 ? ` · ${days} ${t("bookingDetail.daysSuffix")}` : ""}`}
+        description={`${fmtBookingRange(
+          booking.date,
+          booking.endDate,
+          booking.startTime,
+          booking.endTime,
+        )}${
+          daysBetweenInclusive(booking.date, booking.endDate) > 1
+            ? ` · ${daysBetweenInclusive(booking.date, booking.endDate)} days`
+            : ""
+        }`}
         actions={<StatusBadge status={booking.status} />}
       />
       <Card>

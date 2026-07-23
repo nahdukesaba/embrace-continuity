@@ -7,7 +7,8 @@ import {
   useCloseBooking,
   useRejectBooking,
   useRevokeBooking,
-  useRequestRevisionBooking, useNotifyBooking,
+  useRequestRevisionBooking,
+  useNotifyBooking,
 } from "@/hooks/mutations/useBookingMutations";
 import { useT } from "@/i18n/LanguageProvider";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
@@ -19,7 +20,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { ProofGallery } from "@/components/bookings/ProofGallery";
 import { BookingTimeline } from "@/components/bookings/BookingTimeline";
-import { fmtDate, fmtDateTime } from "@/lib/format";
+import { fmtDateTime, fmtBookingRange, daysBetweenInclusive } from "@/lib/format";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { friendlyError } from "@/lib/errors";
@@ -68,7 +69,16 @@ function AdminBookingReview() {
         titlePrefix={
           <ResourceColorDot resourceId={booking.resourceId} resource={booking.resource} />
         }
-        description={`${fmtDate(booking.date)} · ${booking.startTime} – ${booking.endTime}`}
+        description={`${fmtBookingRange(
+          booking.date,
+          booking.endDate,
+          booking.startTime,
+          booking.endTime,
+        )}${
+          daysBetweenInclusive(booking.date, booking.endDate) > 1
+            ? ` · ${daysBetweenInclusive(booking.date, booking.endDate)} days`
+            : ""
+        }`}
         actions={<StatusBadge status={booking.status} />}
       />
       <div className="grid gap-4 lg:grid-cols-2">
