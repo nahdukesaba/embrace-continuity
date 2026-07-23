@@ -155,4 +155,15 @@
       scroll-behavior: auto !important;
     }
   }
+
+  @keyframes glow-green {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--chart-2) 55%, transparent); }
+    50% { box-shadow: 0 0 16px 4px color-mix(in oklch, var(--chart-2) 55%, transparent); }
+  }
+  @keyframes glow-red {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--destructive) 55%, transparent); }
+    50% { box-shadow: 0 0 16px 4px color-mix(in oklch, var(--destructive) 55%, transparent); }
+  }
+  .glow-green { animation: glow-green 1.8s ease-in-out infinite; }
+  .glow-red { animation: glow-red 1.8s ease-in-out infinite; }
 }

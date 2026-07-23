@@ -1,11 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/common/PageHeader";
 import { GroupedBookingTable } from "@/components/bookings/GroupedBookingTable";
 import { ExportBookingsDialog } from "@/components/admin/ExportBookingsDialog";
 import { useBookings } from "@/hooks/queries/useBookings";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
 import { useBookingStore } from "@/stores/bookingStore";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 import type { BookingStatus } from "@/types";
 import { useT } from "@/i18n/LanguageProvider";
 
@@ -17,15 +26,42 @@ export const Route = createFileRoute("/_authenticated/_admin/admin/bookings/")({
 function AdminBookings() {
   const { filters, setFilter } = useBookingStore();
   const { data, isLoading } = useBookings({ status: filters.status });
+  const [search, setSearch] = useState("");
   const t = useT();
+
+  const filteredItems = useMemo(() => {
+    const items = data?.items ?? [];
+    const q = search.trim().toLowerCase();
+    if (!q) return items;
+    return items.filter((b) => {
+      const name = b.user?.fullName?.toLowerCase() ?? "";
+      const email = b.user?.email?.toLowerCase() ?? "";
+      return name.includes(q) || email.includes(q);
+    });
+  }, [data, search]);
+
   return (
     <div className="space-y-4">
       <PageHeader
         title={t("adminBookings.title")}
         actions={
-          <div className="flex items-center gap-2">
-            <Select value={filters.status ?? "all"} onValueChange={(v) => setFilter("status", v as BookingStatus | "all")}>
-              <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={t("adminBookings.searchUser")}
+                className="w-56 pl-8"
+              />
+            </div>
+            <Select
+              value={filters.status ?? "all"}
+              onValueChange={(v) => setFilter("status", v as BookingStatus | "all")}
+            >
+              <SelectTrigger className="w-40">
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{t("adminBookings.filterAll")}</SelectItem>
                 <SelectItem value="pending">{t("status.pending")}</SelectItem>
@@ -42,7 +78,11 @@ function AdminBookings() {
           </div>
         }
       />
-      {isLoading ? <LoadingSkeleton /> : <GroupedBookingTable bookings={data?.items ?? []} detailHrefBase="/admin/bookings" />}
+      {isLoading ? (
+        <LoadingSkeleton />
+      ) : (
+        <GroupedBookingTable bookings={filteredItems} detailHrefBase="/admin/bookings" />
+      )}
     </div>
   );
 }

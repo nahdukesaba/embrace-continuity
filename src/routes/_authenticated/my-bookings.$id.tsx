@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { useBooking } from "@/hooks/queries/useBookings";
 import { useProofs } from "@/hooks/queries/useProofs";
 import {
@@ -12,8 +13,8 @@ import { ResourceColorDot } from "@/components/common/ResourceColorDot";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ProofUploader } from "@/components/bookings/ProofUploader";
 import { ProofGallery } from "@/components/bookings/ProofGallery";
+import { UsageActionDialog } from "@/components/bookings/UsageActionDialog";
 import { BookingTimeline } from "@/components/bookings/BookingTimeline";
 import { fmtDateTime, fmtBookingRange, daysBetweenInclusive, isTodayInRange } from "@/lib/format";
 import { ArrowLeft } from "lucide-react";
@@ -35,6 +36,7 @@ function BookingDetail() {
   const start = useStartBooking();
   const finish = useFinishBooking();
   const t = useT();
+  const [captureAction, setCaptureAction] = useState<"start" | "finish" | null>(null);
 
   if (isLoading || !booking) return <LoadingSkeleton rows={4} />;
 
@@ -45,10 +47,6 @@ function BookingDetail() {
   const canStart = booking.status === "approved" && inWindow;
   const canFinish = booking.status === "in_use" || booking.status === "needs_revision";
   const needRevision = booking.status === "needs_revision";
-  // Proofs only allowed once approved AND today is within booking window
-  const showBeforeUploader = booking.status === "approved" && inWindow;
-  const showAfterUploader =
-    (booking.status === "in_use" && inWindow) || booking.status === "needs_revision";
   const days = daysBetweenInclusive(booking.date, booking.endDate);
 
   return (
@@ -90,20 +88,19 @@ function BookingDetail() {
       <div className="flex flex-wrap gap-2">
         {booking.status === "approved" && (
           <Button
-            disabled={!canStart || !hasBefore}
-            title={
-              !inWindow
-                ? t("bookingDetail.startTitleWindow")
-                : !hasBefore
-                  ? t("bookingDetail.startTitleNeedBefore")
-                  : undefined
-            }
+            disabled={!canStart}
+            className={canStart ? "glow-green" : undefined}
+            title={!inWindow ? t("bookingDetail.startTitleWindow") : undefined}
             onClick={async () => {
-              try {
-                await start.mutateAsync(booking.id);
-                toast.success(t("bookingDetail.usageStarted"));
-              } catch (e: unknown) {
-                toast.error(e instanceof Error ? e.message : t("bookingDetail.failed"));
+              if (hasBefore) {
+                try {
+                  await start.mutateAsync(booking.id);
+                  toast.success(t("bookingDetail.usageStarted"));
+                } catch (e: unknown) {
+                  toast.error(e instanceof Error ? e.message : t("bookingDetail.failed"));
+                }
+              } else {
+                setCaptureAction("start");
               }
             }}
           >
@@ -112,20 +109,18 @@ function BookingDetail() {
         )}
         {(booking.status === "in_use" || booking.status === "needs_revision") && (
           <Button
-            disabled={!canFinish || !hasAfter}
-            title={
-              !hasAfter
-                ? t("bookingDetail.finishTitleNeedAfter")
-                : needRevision
-                  ? t("bookingDetail.finishTitleNeedAfter")
-                  : undefined
-            }
+            disabled={!canFinish}
+            className={canFinish ? "glow-red" : undefined}
             onClick={async () => {
-              try {
-                await finish.mutateAsync(booking.id);
-                toast.success(t("bookingDetail.usageFinished"));
-              } catch (e: unknown) {
-                toast.error(e instanceof Error ? e.message : t("bookingDetail.failed"));
+              if (hasAfter && !needRevision) {
+                try {
+                  await finish.mutateAsync(booking.id);
+                  toast.success(t("bookingDetail.usageFinished"));
+                } catch (e: unknown) {
+                  toast.error(e instanceof Error ? e.message : t("bookingDetail.failed"));
+                }
+              } else {
+                setCaptureAction("finish");
               }
             }}
           >
@@ -163,12 +158,6 @@ function BookingDetail() {
         {(booking.status === "approved" || booking.status === "in_use") && !inWindow && (
           <p className="text-sm text-muted-foreground">{t("bookingDetail.windowHint")}</p>
         )}
-        {(showBeforeUploader || showAfterUploader) && (
-          <div className="grid gap-4 sm:grid-cols-2">
-            {showBeforeUploader && <ProofUploader bookingId={booking.id} kind="before" />}
-            {showAfterUploader && <ProofUploader bookingId={booking.id} kind="after" />}
-          </div>
-        )}
         <ProofGallery proofs={proofs ?? []} />
       </section>
 
@@ -176,6 +165,15 @@ function BookingDetail() {
         <h2 className="text-lg font-semibold">{t("bookingDetail.timeline")}</h2>
         <BookingTimeline bookingId={booking.id} />
       </section>
+
+      {captureAction && (
+        <UsageActionDialog
+          bookingId={booking.id}
+          action={captureAction}
+          open={!!captureAction}
+          onOpenChange={(open) => !open && setCaptureAction(null)}
+        />
+      )}
     </div>
   );
 }

@@ -101,6 +101,10 @@ const en: Dict = {
   "auth.rejectedSubtitle": "This account cannot access the app.",
   "auth.rejectedDesc":
     "Your registration was declined. Please contact an administrator if you believe this is a mistake.",
+  "auth.updatePhone": "Update phone number",
+  "auth.updatePhoneDesc": "Used for booking notifications.",
+  "auth.phoneUpdated": "Phone number updated",
+  "auth.phoneUpdateFailed": "Failed to update phone number",
 
   "home.title": "Booking Calendar",
   "home.descAuth":
@@ -132,13 +136,16 @@ const en: Dict = {
   "bookingDetail.pendingHint": "Photos can be uploaded once your booking is approved.",
   "bookingDetail.windowHint": "Photo upload becomes available on your booked day.",
   "bookingDetail.startTitleWindow": "You can only start on the booked day",
-  "bookingDetail.startTitleNeedBefore": "Upload a 'before' photo first",
-  "bookingDetail.finishTitleNeedAfter": "Upload an 'after' photo first",
   "bookingDetail.usageStarted": "Usage started",
   "bookingDetail.usageFinished": "Usage finished",
   "bookingDetail.cancelled": "Booking cancelled",
   "bookingDetail.failed": "Action failed",
   "bookingDetail.daysSuffix": "days",
+  "bookingDetail.captureBeforeDesc":
+    "Take a live photo of the resource before use. This will upload the photo and start usage.",
+  "bookingDetail.captureAfterDesc":
+    "Take a live photo of the resource after use. This will upload the photo and finish usage.",
+  "bookingDetail.submitting": "Uploading and updating booking…",
 
   "resources.title": "Resources",
   "resources.description": "Browse rooms, cars, and bikes available for booking.",
@@ -169,6 +176,7 @@ const en: Dict = {
 
   "adminBookings.title": "Review Bookings",
   "adminBookings.filterAll": "All",
+  "adminBookings.searchUser": "Search by user...",
   "adminDashboard.title": "Admin Dashboard",
   "adminDashboard.subtitle": "Operational overview.",
   "adminDashboard.pendingRequests": "Pending requests",
@@ -348,6 +356,10 @@ const id: Dict = {
   "auth.rejectedSubtitle": "Akun ini tidak dapat mengakses aplikasi.",
   "auth.rejectedDesc":
     "Pendaftaran Anda ditolak. Silakan hubungi administrator jika Anda merasa ini keliru.",
+  "auth.updatePhone": "Perbarui nomor telepon",
+  "auth.updatePhoneDesc": "Digunakan untuk notifikasi pemesanan.",
+  "auth.phoneUpdated": "Nomor telepon diperbarui",
+  "auth.phoneUpdateFailed": "Gagal memperbarui nomor telepon",
 
   "home.title": "Kalender Pemesanan",
   "home.descAuth":
@@ -379,13 +391,16 @@ const id: Dict = {
   "bookingDetail.pendingHint": "Foto dapat diunggah setelah pemesanan disetujui.",
   "bookingDetail.windowHint": "Unggah foto tersedia pada hari pemesanan Anda.",
   "bookingDetail.startTitleWindow": "Hanya bisa memulai pada hari pemesanan",
-  "bookingDetail.startTitleNeedBefore": "Unggah foto 'sebelum' terlebih dahulu",
-  "bookingDetail.finishTitleNeedAfter": "Unggah foto 'sesudah' terlebih dahulu",
   "bookingDetail.usageStarted": "Pemakaian dimulai",
   "bookingDetail.usageFinished": "Pemakaian selesai",
   "bookingDetail.cancelled": "Pemesanan dibatalkan",
   "bookingDetail.failed": "Aksi gagal",
   "bookingDetail.daysSuffix": "hari",
+  "bookingDetail.captureBeforeDesc":
+    "Ambil foto langsung dari kamera sebelum pemakaian. Ini akan mengunggah foto dan memulai pemakaian.",
+  "bookingDetail.captureAfterDesc":
+    "Ambil foto langsung dari kamera setelah pemakaian. Ini akan mengunggah foto dan menyelesaikan pemakaian.",
+  "bookingDetail.submitting": "Mengunggah dan memperbarui pemesanan…",
 
   "resources.title": "Aset",
   "resources.description": "Jelajahi ruangan, mobil, dan motor yang tersedia.",
@@ -416,6 +431,7 @@ const id: Dict = {
 
   "adminBookings.title": "Tinjau Pemesanan",
   "adminBookings.filterAll": "Semua",
+  "adminBookings.searchUser": "Cari berdasarkan pengguna...",
   "adminDashboard.title": "Dasbor Admin",
   "adminDashboard.subtitle": "Ringkasan operasional.",
   "adminDashboard.pendingRequests": "Permintaan menunggu",

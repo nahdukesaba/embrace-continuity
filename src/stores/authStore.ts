@@ -8,6 +8,7 @@ interface AuthState {
   role: Role | null;
   status: "idle" | "loading" | "authenticated" | "unauthenticated";
   setSession: (s: { user: AppUser; token: string }) => void;
+  updateUser: (patch: Partial<AppUser>) => void;
   signOut: () => void;
 }
 
@@ -20,6 +21,7 @@ export const useAuthStore = create<AuthState>()(
       status: "idle",
       setSession: ({ user, token }) =>
         set({ user, token, role: user.role, status: "authenticated" }),
+      updateUser: (patch) => set((s) => (s.user ? { user: { ...s.user, ...patch } } : s)),
       signOut: () => set({ user: null, token: null, role: null, status: "unauthenticated" }),
     }),
     { name: "auth-storage" },

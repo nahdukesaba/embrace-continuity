@@ -19,6 +19,16 @@ export const authApi = {
   async changePassword(input: ChangePasswordInput): Promise<void> {
     await http.put("/auth/password", input);
   },
+  /**
+   * ASSUMPTION: no self-service profile-update endpoint existed in this
+   * codebase yet, so this follows the existing /auth/password convention
+   * (PUT under /auth for actions on the caller's own account). Confirm
+   * this route exists on the backend, or update it to match.
+   */
+  async updatePhone(input: { phone: string }): Promise<AppUser> {
+    const { data } = await http.put<AppUser>("/auth/phone", input);
+    return data;
+  },
   async resetPassword(userId: string): Promise<void> {
     await http.put("/auth/reset", { userId });
   },

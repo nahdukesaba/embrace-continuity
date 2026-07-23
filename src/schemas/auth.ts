@@ -31,3 +31,11 @@ export const changePasswordSchema = z
   });
 
 export type ChangePasswordValues = z.infer<typeof changePasswordSchema>;
+
+export const updatePhoneSchema = z.object({
+  phone: z
+    .string()
+    .trim()
+    .regex(/^\d{8,15}$/, "Digits only, e.g. 6281234567890"),
+});
+export type UpdatePhoneValues = z.infer<typeof updatePhoneSchema>;

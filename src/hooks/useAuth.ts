@@ -6,5 +6,6 @@ export function useAuth() {
   const isAdmin = useAuthStore(selectIsAdmin);
   const isAuthed = useAuthStore(selectIsAuthed);
   const signOut = useAuthStore((s) => s.signOut);
-  return { user, role, isAdmin, isAuthed, signOut };
+  const updateUser = useAuthStore((s) => s.updateUser);
+  return { user, role, isAdmin, isAuthed, signOut, updateUser };
 }
