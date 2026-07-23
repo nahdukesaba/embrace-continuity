@@ -63,7 +63,9 @@ function normalizeBooking(b: ApiBookingRaw): Booking {
   };
 }
 
-function toListParams(filters: BookingFilters & { userId?: string; page?: number; pageSize?: number }) {
+function toListParams(
+  filters: BookingFilters & { userId?: string; page?: number; pageSize?: number },
+) {
   const p: Record<string, string | number> = {};
   if (filters.status && filters.status !== "all") p.status = filters.status;
   if (filters.resourceId) p.resourceId = filters.resourceId;
@@ -90,7 +92,7 @@ export const bookingsApi = {
     return {
       items: (data.data ?? []).map(normalizeBooking),
       page: data.page ?? 1,
-      pageSize: data.pageSize ?? (data.data?.length ?? 0),
+      pageSize: data.pageSize ?? data.data?.length ?? 0,
       total: data.total ?? data.data?.length ?? 0,
       totalPages: data.totalPages ?? 1,
     };
@@ -113,10 +115,9 @@ export const bookingsApi = {
     return normalizeBooking(raw);
   },
   async approve(id: string, adminNotes?: string): Promise<ApproveBookingResponse> {
-    const { data } = await http.put<{ booking: ApiBookingRaw; autoRejectedIds?: string[] } | ApiBookingRaw>(
-      `/bookings/${id}/approve`,
-      { adminNotes },
-    );
+    const { data } = await http.put<
+      { booking: ApiBookingRaw; autoRejectedIds?: string[] } | ApiBookingRaw
+    >(`/bookings/${id}/approve`, { adminNotes });
     const withWrapper = data as { booking?: ApiBookingRaw; autoRejectedIds?: string[] };
     const raw = withWrapper.booking ?? (data as ApiBookingRaw);
     return {
@@ -153,14 +154,15 @@ export const bookingsApi = {
     return data;
   },
   async requestRevision(id: string, adminNotes?: string): Promise<Booking> {
-    const { data } = await http.put<ApiBookingRaw>(`/bookings/${id}/request-revision`, { adminNotes });
+    const { data } = await http.put<ApiBookingRaw>(`/bookings/${id}/request-revision`, {
+      adminNotes,
+    });
     return normalizeBooking(data);
   },
   async history(id: string): Promise<TimelineEntry[]> {
     const { data } = await http.get<TimelineEntry[] | { data: TimelineEntry[] }>(
       `/bookings/${id}/history`,
     );
-    return Array.isArray(data) ? data : data.data ?? [];
+    return Array.isArray(data) ? data : (data.data ?? []);
   },
 };
-

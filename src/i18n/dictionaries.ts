@@ -62,6 +62,9 @@ const en: Dict = {
   "action.closeBooking": "Close booking",
   "action.requestRevision": "Request revision",
   "action.browseResources": "Browse resources",
+  "action.revoke": "Revoke",
+  "action.notify": "Notify user",
+  "action.notifyMessage": "Message (optional)",
 
   "auth.emailLabel": "Email",
   "auth.passwordLabel": "Password",
@@ -75,7 +78,8 @@ const en: Dict = {
   "auth.passwordUpdateFailed": "Failed to update password",
   "auth.fullNameLabel": "Full name",
   "auth.signInTitle": "Sign in",
-  "auth.signInSubtitle": "Use your email and password to login. Contact your admin for mor information.",
+  "auth.signInSubtitle":
+    "Use your email and password to login. Contact your admin for mor information.",
   "auth.signingIn": "Signing in...",
   "auth.welcomeBack": "Welcome back",
   "auth.signInFailed": "Sign in failed",
@@ -87,17 +91,22 @@ const en: Dict = {
   "auth.registrationFailed": "Registration failed",
   "auth.haveAccount": "Already have an account?",
   "auth.phoneLabel": "Phone (optional)",
-  "auth.phoneHint": "Digits only with country code, e.g. 6281234567890. Used for WhatsApp notifications.",
+  "auth.phoneHint":
+    "Digits only with country code, e.g. 6281234567890. Used for WhatsApp notifications.",
   "auth.pendingTitle": "Awaiting approval",
   "auth.pendingSubtitle": "Your account is under review.",
-  "auth.pendingDesc": "An administrator will review your registration shortly. You'll be able to sign in once your account is approved.",
+  "auth.pendingDesc":
+    "An administrator will review your registration shortly. You'll be able to sign in once your account is approved.",
   "auth.rejectedTitle": "Access declined",
   "auth.rejectedSubtitle": "This account cannot access the app.",
-  "auth.rejectedDesc": "Your registration was declined. Please contact an administrator if you believe this is a mistake.",
+  "auth.rejectedDesc":
+    "Your registration was declined. Please contact an administrator if you believe this is a mistake.",
 
   "home.title": "Booking Calendar",
-  "home.descAuth": "See all approved and requested bookings. Open a resource to request a new booking.",
-  "home.descAnon": "See all approved and requested bookings. Sign in to request a booking or upload proofs.",
+  "home.descAuth":
+    "See all approved and requested bookings. Open a resource to request a new booking.",
+  "home.descAnon":
+    "See all approved and requested bookings. Sign in to request a booking or upload proofs.",
 
   "dashboard.welcome": "Welcome",
   "dashboard.subtitle": "Your bookings at a glance.",
@@ -171,8 +180,9 @@ const en: Dict = {
   "adminBookingDetail.requestRevision": "Revision requested",
   "adminBookingDetail.revoked": "Booking revoked",
   "adminBookingDetail.autoRejected": "other request(s) auto-rejected",
-  "adminBookingDetail.autoNotifyHint": "Requester is notified automatically on approve, reject, and revoke.",
-  "action.revoke": "Revoke",
+  "adminBookingDetail.autoNotifyHint":
+    "Requester is notified automatically on approve, reject, and revoke.",
+  "adminBookingDetail.notifySent": "Notification sent",
 
   "theme.toggle": "Toggle theme",
   "theme.light": "Light",
@@ -218,9 +228,6 @@ const en: Dict = {
   "admin.exportFrom": "From",
   "admin.exportTo": "To",
   "admin.exportDownload": "Download CSV",
-  "admin.notify": "Notify user",
-  "admin.notifyMessage": "Message (optional)",
-  "admin.notifySent": "Notification sent",
   "admin.groupRoom": "Rooms",
   "admin.groupCar": "Cars",
   "admin.groupBike": "Bikes",
@@ -302,6 +309,9 @@ const id: Dict = {
   "action.closeBooking": "Tutup pesanan",
   "action.requestRevision": "Minta revisi",
   "action.browseResources": "Jelajahi aset",
+  "action.notify": "Beri tahu pengguna",
+  "action.notifyMessage": "Pesan (opsional)",
+  "action.revoke": "Batalkan",
 
   "auth.emailLabel": "Email",
   "auth.passwordLabel": "Kata sandi",
@@ -315,7 +325,8 @@ const id: Dict = {
   "auth.passwordUpdateFailed": "Gagal memperbarui kata sandi",
   "auth.fullNameLabel": "Nama lengkap",
   "auth.signInTitle": "Masuk",
-  "auth.signInSubtitle": "Gunakan email dan password anda untuk masuk. Hubungi admin anda untuk keterangan lebih lanjut.",
+  "auth.signInSubtitle":
+    "Gunakan email dan password anda untuk masuk. Hubungi admin anda untuk keterangan lebih lanjut.",
   "auth.signingIn": "Sedang masuk...",
   "auth.welcomeBack": "Selamat datang kembali",
   "auth.signInFailed": "Gagal masuk",
@@ -327,17 +338,22 @@ const id: Dict = {
   "auth.registrationFailed": "Pendaftaran gagal",
   "auth.haveAccount": "Sudah punya akun?",
   "auth.phoneLabel": "Telepon (opsional)",
-  "auth.phoneHint": "Hanya angka dengan kode negara, mis. 6281234567890. Digunakan untuk notifikasi WhatsApp.",
+  "auth.phoneHint":
+    "Hanya angka dengan kode negara, mis. 6281234567890. Digunakan untuk notifikasi WhatsApp.",
   "auth.pendingTitle": "Menunggu persetujuan",
   "auth.pendingSubtitle": "Akun Anda sedang ditinjau.",
-  "auth.pendingDesc": "Administrator akan meninjau pendaftaran Anda dalam waktu dekat. Anda dapat masuk setelah akun disetujui.",
+  "auth.pendingDesc":
+    "Administrator akan meninjau pendaftaran Anda dalam waktu dekat. Anda dapat masuk setelah akun disetujui.",
   "auth.rejectedTitle": "Akses ditolak",
   "auth.rejectedSubtitle": "Akun ini tidak dapat mengakses aplikasi.",
-  "auth.rejectedDesc": "Pendaftaran Anda ditolak. Silakan hubungi administrator jika Anda merasa ini keliru.",
+  "auth.rejectedDesc":
+    "Pendaftaran Anda ditolak. Silakan hubungi administrator jika Anda merasa ini keliru.",
 
   "home.title": "Kalender Pemesanan",
-  "home.descAuth": "Lihat semua pemesanan yang disetujui dan diminta. Buka aset untuk mengajukan pemesanan baru.",
-  "home.descAnon": "Lihat semua pemesanan yang disetujui dan diminta. Masuk untuk mengajukan pemesanan atau mengunggah foto bukti.",
+  "home.descAuth":
+    "Lihat semua pemesanan yang disetujui dan diminta. Buka aset untuk mengajukan pemesanan baru.",
+  "home.descAnon":
+    "Lihat semua pemesanan yang disetujui dan diminta. Masuk untuk mengajukan pemesanan atau mengunggah foto bukti.",
 
   "dashboard.welcome": "Selamat datang",
   "dashboard.subtitle": "Ringkasan pemesanan Anda.",
@@ -411,8 +427,9 @@ const id: Dict = {
   "adminBookingDetail.requestRevision": "Permintaan revisi dikirim",
   "adminBookingDetail.revoked": "Pemesanan dibatalkan admin",
   "adminBookingDetail.autoRejected": "permintaan lain ditolak otomatis",
-  "adminBookingDetail.autoNotifyHint": "Peminta menerima notifikasi otomatis saat disetujui, ditolak, atau dibatalkan.",
-  "action.revoke": "Batalkan",
+  "adminBookingDetail.autoNotifyHint":
+    "Peminta menerima notifikasi otomatis saat disetujui, ditolak, atau dibatalkan.",
+  "adminBookingDetail.notifySent": "Notifikasi terkirim",
 
   "theme.toggle": "Ubah tema",
   "theme.light": "Terang",
@@ -450,7 +467,8 @@ const id: Dict = {
   "booking.afterPhoto": "Foto sesudah",
   "booking.needBeforePhoto": "Unggah foto 'sebelum' untuk memulai pemakaian.",
   "booking.needAfterPhoto": "Unggah foto 'sesudah' untuk menyelesaikan pemakaian.",
-  "booking.closeOnlyFinished": "Hanya pemesanan yang telah diselesaikan pengguna yang dapat ditutup.",
+  "booking.closeOnlyFinished":
+    "Hanya pemesanan yang telah diselesaikan pengguna yang dapat ditutup.",
   "booking.new": "Pemesanan baru",
 
   "admin.export": "Ekspor pemesanan",
@@ -458,9 +476,6 @@ const id: Dict = {
   "admin.exportFrom": "Dari",
   "admin.exportTo": "Sampai",
   "admin.exportDownload": "Unduh CSV",
-  "admin.notify": "Beri tahu pengguna",
-  "admin.notifyMessage": "Pesan (opsional)",
-  "admin.notifySent": "Notifikasi terkirim",
   "admin.groupRoom": "Ruangan",
   "admin.groupCar": "Mobil",
   "admin.groupBike": "Motor",

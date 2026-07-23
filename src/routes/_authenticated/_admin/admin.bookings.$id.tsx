@@ -7,7 +7,7 @@ import {
   useCloseBooking,
   useRejectBooking,
   useRevokeBooking,
-  useRequestRevisionBooking,
+  useRequestRevisionBooking, useNotifyBooking,
 } from "@/hooks/mutations/useBookingMutations";
 import { useT } from "@/i18n/LanguageProvider";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
@@ -38,6 +38,7 @@ function AdminBookingReview() {
   const close = useCloseBooking();
   const revoke = useRevokeBooking();
   const requestRevision = useRequestRevisionBooking();
+  const notify = useNotifyBooking();
   const t = useT();
   const [notes, setNotes] = useState("");
 
@@ -164,7 +165,19 @@ function AdminBookingReview() {
                   )
                 }
               >
-                {t("action.requestRevision")}
+                {t("admin.notify")}
+              </Button>
+              <Button
+                variant="outline"
+                disabled={false}
+                onClick={() =>
+                  act(
+                    () => notify.mutateAsync({ id: booking.id, message: notes }),
+                    t("adminBookingDetail.notifySent"),
+                  )
+                }
+              >
+                {t("action.notify")}
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
