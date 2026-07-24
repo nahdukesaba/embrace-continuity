@@ -261,6 +261,16 @@ const en: Dict = {
   "adminUsers.resetPassword": "Reset password",
   "adminUsers.resetPasswordQ": "Reset this user's password?",
   "adminUsers.passwordReset": "Password reset",
+
+  "calendar.when": "When",
+  "calendar.status": "Status",
+  "calendar.bookedBy": "Booked by",
+  "calendar.purpose": "Purpose",
+  "calendar.plate": "Plate",
+  "calendar.viewResource": "View resource",
+  "calendar.goToBooking": "Go to booking",
+  "calendar.goToMyBooking": "My booking",
+  "calendar.signInToBook": "Sign in to book",
 };
 
 const id: Dict = {
@@ -517,6 +527,16 @@ const id: Dict = {
   "adminUsers.resetPassword": "Atur ulang kata sandi",
   "adminUsers.resetPasswordQ": "Atur ulang kata sandi pengguna ini?",
   "adminUsers.passwordReset": "Kata sandi diatur ulang",
+
+  "calendar.when": "Waktu",
+  "calendar.status": "Status",
+  "calendar.bookedBy": "Dipesan oleh",
+  "calendar.purpose": "Keperluan",
+  "calendar.plate": "Plat nomor",
+  "calendar.viewResource": "Lihat aset",
+  "calendar.goToBooking": "Buka pemesanan",
+  "calendar.goToMyBooking": "Pesanan saya",
+  "calendar.signInToBook": "Masuk untuk memesan",
 };
 
 export const dictionaries: Record<Language, Dict> = { en, id };
