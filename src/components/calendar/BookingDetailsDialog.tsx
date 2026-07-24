@@ -22,8 +22,9 @@ export function BookingDetailsDialog({
   open: boolean;
   onOpenChange: (v: boolean) => void;
 }) {
-  const { isAuthed } = useAuth();
+  const { isAuthed, isAdmin, user } = useAuth();
   if (!booking) return null;
+  const isOwnBooking = isAuthed && user?.id === booking.userId;
   const color = colorForResource(booking.resourceId, booking.resource);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -76,11 +77,27 @@ export function BookingDetailsDialog({
         </div>
         <DialogFooter>
           {isAuthed ? (
-            <Button asChild>
-              <Link to="/resources/$id" params={{ id: booking.resourceId }}>
-                View resource
-              </Link>
-            </Button>
+            <>
+              <Button asChild variant="outline">
+                <Link to="/resources/$id" params={{ id: booking.resourceId }}>
+                  View resource
+                </Link>
+              </Button>
+              {isOwnBooking && (
+                <Button asChild>
+                  <Link to="/my-bookings/$id" params={{ id: booking.id }}>
+                    Go to booking
+                  </Link>
+                </Button>
+              )}
+              {isAdmin && (
+                <Button asChild>
+                  <Link to="/admin/bookings/$id" params={{ id: booking.id }}>
+                    Go to booking
+                  </Link>
+                </Button>
+              )}
+            </>
           ) : (
             <Button asChild>
               <Link to="/login">Sign in to book</Link>
