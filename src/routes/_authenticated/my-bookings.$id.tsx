@@ -17,7 +17,7 @@ import { ProofGallery } from "@/components/bookings/ProofGallery";
 import { UsageActionDialog } from "@/components/bookings/UsageActionDialog";
 import { BookingTimeline } from "@/components/bookings/BookingTimeline";
 import { fmtDateTime, fmtBookingRange, daysBetweenInclusive, isTodayInRange } from "@/lib/format";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
 import { friendlyError } from "@/lib/errors";
 
@@ -62,16 +62,7 @@ function BookingDetail() {
         titlePrefix={
           <ResourceColorDot resourceId={booking.resourceId} resource={booking.resource} />
         }
-        description={`${fmtBookingRange(
-          booking.date,
-          booking.endDate,
-          booking.startTime,
-          booking.endTime,
-        )}${
-          daysBetweenInclusive(booking.date, booking.endDate) > 1
-            ? ` · ${daysBetweenInclusive(booking.date, booking.endDate)} days`
-            : ""
-        }`}
+        description={`${fmtBookingRange(booking.date, booking.endDate, booking.startTime, booking.endTime)}${days > 1 ? ` · ${days} ${t("bookingDetail.daysSuffix")}` : ""}`}
         actions={<StatusBadge status={booking.status} />}
       />
       <Card>
@@ -121,7 +112,12 @@ function BookingDetail() {
             disabled={!canFinish}
             className={canFinish ? "glow-red" : undefined}
             onClick={async () => {
-              if (hasAfter && !needRevision) {
+              if (needRevision) {
+                // Always re-capture on revision — never reuse the old proof.
+                setCaptureAction("finish");
+                return;
+              }
+              if (hasAfter) {
                 try {
                   await finish.mutateAsync(booking.id);
                   toast.success(t("bookingDetail.usageFinished"));
@@ -151,13 +147,17 @@ function BookingDetail() {
             {t("booking.cancel")}
           </Button>
         )}
-        {booking.status === "needs_revision" && (
-          <div className="pt-2 text-sm text-warning">{t("bookingDetail.needsRevisionNotice")}</div>
-        )}
-        {booking.status === "closed" && (
-          <div className="pt-2 text-sm text-muted-foreground">{t("bookingDetail.closed")}</div>
-        )}
       </div>
+
+      {needRevision && (
+        <div className="flex items-start gap-2 rounded-md border border-chart-5/30 bg-chart-5/10 p-3 text-sm text-chart-5">
+          <AlertTriangle className="mt-0.5 size-4 shrink-0" />
+          <span>{t("bookingDetail.needsRevisionNotice")}</span>
+        </div>
+      )}
+      {booking.status === "closed" && (
+        <p className="text-sm text-muted-foreground">{t("bookingDetail.closed")}</p>
+      )}
 
       <section className="space-y-4">
         <h2 className="text-lg font-semibold">{t("bookingDetail.proofPhotos")}</h2>

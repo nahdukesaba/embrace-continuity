@@ -146,6 +146,10 @@ const en: Dict = {
   "bookingDetail.captureAfterDesc":
     "Take a live photo of the resource after use. This will upload the photo and finish usage.",
   "bookingDetail.submitting": "Uploading and updating booking…",
+  "bookingDetail.needsRevisionNotice":
+    "An admin requested a revision on your after-usage proof. Please press Finish Usage again and upload new photos.",
+  "bookingDetail.proofsLockedNotice":
+    "Once submitted, these photos cannot be added to or edited. Review them before continuing.",
 
   "resources.title": "Resources",
   "resources.description": "Browse rooms, cars, and bikes available for booking.",
@@ -411,6 +415,10 @@ const id: Dict = {
   "bookingDetail.captureAfterDesc":
     "Ambil foto langsung dari kamera setelah pemakaian. Ini akan mengunggah foto dan menyelesaikan pemakaian.",
   "bookingDetail.submitting": "Mengunggah dan memperbarui pemesanan…",
+  "bookingDetail.needsRevisionNotice":
+    "Admin meminta revisi pada bukti foto setelah pemakaian Anda. Silakan tekan Selesai Pemakaian lagi dan unggah foto baru.",
+  "bookingDetail.proofsLockedNotice":
+    "Setelah dikirim, foto ini tidak dapat ditambah atau diubah lagi. Periksa foto sebelum melanjutkan.",
 
   "resources.title": "Aset",
   "resources.description": "Jelajahi ruangan, mobil, dan motor yang tersedia.",
