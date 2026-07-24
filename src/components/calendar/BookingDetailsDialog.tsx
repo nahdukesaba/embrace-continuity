@@ -88,7 +88,7 @@ export function BookingDetailsDialog({
               {isOwnBooking && (
                 <Button asChild>
                   <Link to="/my-bookings/$id" params={{ id: booking.id }}>
-                    {t("calendar.goToBooking")}
+                    {t("calendar.goToMyBooking")}
                   </Link>
                 </Button>
               )}
